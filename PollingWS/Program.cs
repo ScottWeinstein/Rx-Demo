@@ -14,6 +14,7 @@ namespace PollingWS
     {
         static void Main(string[] args)
         {
+            ConsWL(ConsoleColor.White, "" + Thread.CurrentThread.ManagedThreadId);
             Traditional();
             //Rx(RxTicks,RxUserKeys,TimeSpan.FromMilliseconds(500));
             Console.ReadKey();
@@ -66,6 +67,7 @@ namespace PollingWS
                 GetSomeSlowDataTraditional("ButtonClick");
             }
         }
+
         static volatile bool isRunning = false;
         private static void GetSomeSlowDataTraditional(string sender)
         {
@@ -80,19 +82,18 @@ namespace PollingWS
         
         private static void GetSomeSlowData(string sender)
         {
-            using (ChangeConsoleColor(ConsoleColor.Green))
-            {
-                Console.WriteLine("\n" + sender);
-            }
-
-                Thread.Sleep(3000);
-                using (ChangeConsoleColor(ConsoleColor.Yellow))
-                {
-                    Console.WriteLine("\n{0} Exit timer",Thread.CurrentThread.ManagedThreadId);    
-                }
-                
+            ConsWL(ConsoleColor.Green,sender);
+            Thread.Sleep(3000);
+            ConsWL(ConsoleColor.Yellow,"\n{0} Exit timer",Thread.CurrentThread.ManagedThreadId);    
         }
-        
+
+        private static void ConsWL(ConsoleColor color, string ftm,params object[] args)
+        {
+            using (ChangeConsoleColor(color))
+            {
+                Console.WriteLine(ftm,args);
+            }
+        }
         public static IDisposable ChangeConsoleColor(ConsoleColor newcolor)
         {
             var color = Console.ForegroundColor;
