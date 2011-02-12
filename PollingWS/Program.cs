@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Disposables;
 using System.Linq;
-using System.Text;
-
 using System.Threading;
 using System.Threading.Tasks;
-using System.Disposables;
-using System.Concurrency;
 
 namespace PollingWS
 {
@@ -16,12 +12,15 @@ namespace PollingWS
         {
             ConsWL(ConsoleColor.White, "" + Thread.CurrentThread.ManagedThreadId);
             Traditional();
-            //Rx(RxTicks,RxUserKeys,TimeSpan.FromMilliseconds(500));
+            //Rx(RxUserKeys,TimeSpan.FromMilliseconds(500));
             Console.ReadKey();
         }
 
-        private static void Rx(IObservable<string> rxTicks, IObservable<string> rxUserKeys, TimeSpan ts)
+        #region RX
+        private static void Rx(IObservable<string> rxUserKeys, TimeSpan ts)
         {
+            var rxTicks = Observable.Interval(TimeSpan.FromMilliseconds(10000)).Select(_ => "scheduled");
+            
             Observable.Merge(rxTicks, rxUserKeys)
                       .Throttle(ts)
                       .Subscribe(GetSomeSlowData);
@@ -43,15 +42,10 @@ namespace PollingWS
                                 });
             }
         }
-        private static IObservable<string> RxTicks
-        {
-            get
-            {
-                return Observable.Interval(TimeSpan.FromMilliseconds(10000)).Select(_ => "scheduled");
-            }
-        }
+        
+        #endregion
 
-
+        #region Traditional
         private static void Traditional()
         {
             var timer = new System.Timers.Timer(10000);
@@ -78,20 +72,22 @@ namespace PollingWS
                     .ContinueWith(tsk => { isRunning = false; });
             }
         }
+        #endregion
 
-        
+        #region Commmon Helpers
+
         private static void GetSomeSlowData(string sender)
         {
-            ConsWL(ConsoleColor.Green,sender);
+            ConsWL(ConsoleColor.Green, sender);
             Thread.Sleep(3000);
-            ConsWL(ConsoleColor.Yellow,"\n{0} Exit timer",Thread.CurrentThread.ManagedThreadId);    
+            ConsWL(ConsoleColor.Yellow, "\n{0} Exit timer", Thread.CurrentThread.ManagedThreadId);
         }
 
-        private static void ConsWL(ConsoleColor color, string ftm,params object[] args)
+        private static void ConsWL(ConsoleColor color, string ftm, params object[] args)
         {
             using (ChangeConsoleColor(color))
             {
-                Console.WriteLine(ftm,args);
+                Console.WriteLine(ftm, args);
             }
         }
         public static IDisposable ChangeConsoleColor(ConsoleColor newcolor)
@@ -100,9 +96,6 @@ namespace PollingWS
             Console.ForegroundColor = newcolor;
             return Disposable.Create(() => Console.ForegroundColor = color);
         }
-        
-
-
-
+        #endregion
     }
 }
