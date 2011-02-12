@@ -11,6 +11,16 @@ namespace UnitTestingUICode
             return new Recorded<Notification<T>>(ticks, new Notification<T>.OnNext(value));
         }
 
+        public Recorded<Notification<T>> OnNext<T>(TimeSpan time, T value)
+        {
+            return new Recorded<Notification<T>>(time.Ticks, new Notification<T>.OnNext(value));
+        }
+        public Recorded<Notification<T>> Value<T>(TimeSpan time, T value)
+        {
+            return new Recorded<Notification<T>>(time.Ticks, new Notification<T>.OnNext(value));
+        }
+
+
         public Recorded<Notification<T>> OnCompleted<T>(long ticks)
         {
             return new Recorded<Notification<T>>(ticks, new Notification<T>.OnCompleted());

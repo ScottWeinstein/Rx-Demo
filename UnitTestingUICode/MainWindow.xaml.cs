@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Concurrency;
 
 namespace UnitTestingUICode
 {
@@ -52,11 +53,15 @@ namespace UnitTestingUICode
                 .Subscribe(results => { IsCorrectPassKey = results; });
 
         }
-
-        public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password,TimeSpan delay)
+        
+        public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay)
         {
-            return keypresses.BufferWithTimeOrCount(delay,password.Length)
-                            .SelectMany(a => a.Aggregate("",(acc, curr) => acc += curr))
+            return DetectCorrectKeypass(keypresses, password, delay, Scheduler.ThreadPool);
+        }
+        public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay, IScheduler scheduler)
+        {
+            return keypresses.BufferWithTimeOrCount(delay, password.Length, scheduler)
+                            .SelectMany(a => a.Aggregate("", (acc, curr) => acc += curr))
                             .Where(guess => guess != "")
                             .Select(guess => guess == password)
                             .DistinctUntilChanged();
