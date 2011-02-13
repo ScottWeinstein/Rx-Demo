@@ -16,39 +16,25 @@ namespace DisplayUpdates
             TwitterService service = GetTwitterService(authKeys);
 
             IEnumerable<TwitterStatus> tweets = service.ListTweetsOnHomeTimeline();
-            var sinceId = GetMaxId(tweets, 0);
+            var startsinceId = GetMaxId(tweets, 0);
+            var state = new Tuple<TwitterService,long,IEnumerable<TwitterStatus>>(service,startsinceId,tweets);
+            IObservable<TwitterStatus> futureTweets = Observable.GenerateWithTime(state,
+                                                                                    _ => true,
+                                                                                    st =>
+                                                                                    {
+                                                                                        var sinceId = st.Item2;
+                                                                                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
+                                                                                        sinceId = GetMaxId(newtweets, sinceId);
+                                                                                        return new Tuple<TwitterService, long, IEnumerable<TwitterStatus>>(service, sinceId, newtweets);
+                                                                                    },
+                                                                                    st => st.Item3.ToObservable(),
+                                                                                    st => GetSleepTime(st.Item1, sched), 
+                                                                                    sched)
+                                                                .SelectMany(a => a);
 
-            IObservable<TwitterStatus> futureTweets =
-                Observable.Create<TwitterStatus>(
-                obs =>
-                {
-                    bool isRunning = true;
-                    Action<Action<TimeSpan>> RecSelf = (self) =>
-                    {
-                        if (!isRunning)
-                            return;
-                        
-                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
-                        sinceId = GetMaxId(newtweets, sinceId);
-
-                        foreach (var tweet in newtweets)
-                        {
-                            obs.OnNext(tweet);
-                        }
-
-                        if (isRunning)
-                        {
-                            self(GetSleepTime(service, sched));
-                        }
-                        
-                    };
-                    sched.Schedule(RecSelf, GetSleepTime(service, sched));
-
-                    return () => { isRunning = false; };
-                });
-
-            Tweets = tweets.ToObservable().Concat(futureTweets)
-                    .ReplayLastByKey(tws => tws.User);
+            Tweets = tweets.ToObservable()
+                           .Concat(futureTweets)
+                           .ReplayLastByKey(tws => tws.User);
         }
 
         private static long GetMaxId(IEnumerable<TwitterStatus> newtweets, long sinceId)
@@ -82,3 +68,32 @@ namespace DisplayUpdates
         public IObservable<TwitterStatus> Tweets { get; private set; }
     }
 }
+/* With Create
+Observable.Create<TwitterStatus>(
+                obs =>
+                {
+                    bool isRunning = true;
+                    Action<Action<TimeSpan>> RecSelf = (self) =>
+                    {
+                        if (!isRunning)
+                            return;
+                        
+                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
+                        sinceId = GetMaxId(newtweets, sinceId);
+
+                        foreach (var tweet in newtweets)
+                        {
+                            obs.OnNext(tweet);
+                        }
+
+                        if (isRunning)
+                        {
+                            self(GetSleepTime(service, sched));
+                        }
+                        
+                    };
+                    sched.Schedule(RecSelf, GetSleepTime(service, sched));
+
+                    return () => { isRunning = false; };
+                });
+*/
