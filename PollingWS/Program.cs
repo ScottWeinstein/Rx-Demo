@@ -11,8 +11,8 @@ namespace PollingWS
         static void Main(string[] args)
         {
             ConsWL(ConsoleColor.White, "" + Thread.CurrentThread.ManagedThreadId);
-            Traditional();
-            //Rx(RxUserKeys,TimeSpan.FromMilliseconds(500));
+            //Traditional();
+            Rx(RxUserKeys,TimeSpan.FromMilliseconds(500));
             Console.ReadKey();
         }
 

@@ -1,9 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Concurrency;
 using System.Reactive.Testing;
 using Xunit;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace UnitTestingUICode
 {
@@ -18,7 +17,6 @@ namespace UnitTestingUICode
             _scheduler = new TestScheduler();
         }
 
-        
         [Fact]
         public void Correct_password_is_accepted()
         {
@@ -53,7 +51,7 @@ namespace UnitTestingUICode
             // Act
             IEnumerable<Recorded<Notification<bool>>> actuals = _scheduler.Run(target);
             // Assert
-            actuals.AssertEqual(OnNext(250, false));
+            actuals.AssertEqual(OnNext(251, false));
         }
     }
 }
