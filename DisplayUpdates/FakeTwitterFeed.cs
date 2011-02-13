@@ -15,7 +15,7 @@ namespace DisplayUpdates
                 _ => true,
                 _ => rnd.Next(),
                 MakeTwitterStatus,
-                _ => TimeSpan.FromSeconds(0.2))
+                _ => TimeSpan.FromSeconds(0.1))
                 .ReplayLastByKey(tws => tws.User);
         }
 

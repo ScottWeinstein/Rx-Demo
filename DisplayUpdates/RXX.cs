@@ -30,6 +30,9 @@ namespace DisplayUpdates
                 else
                 {
                     col[index] = item;
+                    //col.Add(item);
+                    //col.RemoveAt(col.Count - 1);
+                    
                 }
             });
         }
