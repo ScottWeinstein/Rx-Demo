@@ -49,7 +49,8 @@ namespace DisplayUpdates
                         if (sinceId.HasValue)
                         {
                             service.ListTweetsOnHomeTimelineSince((long)sinceId, processNewTweets);
-                        }else
+                        }
+                        else
                         {
                             service.ListTweetsOnHomeTimeline(processNewTweets);
                         }
@@ -126,17 +127,17 @@ Observable.Create<TwitterStatus>(
 
 /* Generate With Time
 IObservable<TwitterStatus> futureTweets = Observable.GenerateWithTime(state,
-                                                                                    _ => true,
-                                                                                    st =>
-                                                                                    {
-                                                                                        var sinceId = st.Item2;
-                                                                                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
-                                                                                        sinceId = GetMaxId(newtweets, sinceId);
-                                                                                        return new Tuple<TwitterService, long, IEnumerable<TwitterStatus>>(service, sinceId, newtweets);
-                                                                                    },
-                                                                                    st => st.Item3.ToObservable(),
-                                                                                    st => GetSleepTime(st.Item1, sched), 
-                                                                                    sched)
+                                                                    _ => true,
+                                                                    st =>
+                                                                    {
+                                                                        var sinceId = st.Item2;
+                                                                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
+                                                                        sinceId = GetMaxId(newtweets, sinceId);
+                                                                        return new Tuple<TwitterService, long, IEnumerable<TwitterStatus>>(service, sinceId, newtweets);
+                                                                    },
+                                                                    st => st.Item3.ToObservable(),
+                                                                    st => GetSleepTime(st.Item1, sched), 
+                                                                    sched)
                                                                 .SelectMany(a => a);
 
             */
