@@ -104,7 +104,10 @@
     <Compile Include="TwitterAuth.xaml.cs">
       <DependentUpon>TwitterAuth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TwitterFeed.cs" />
+    <Compile Include="TwitterFeedAsync.cs" />
+    <Compile Include="TwitterFeedBase.cs" />
+    <Compile Include="TwitterFeedCreateSync.cs" />
+    <Compile Include="TwitterFeedGenerateSync.cs" />
     <Compile Include="TwitterFeedVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

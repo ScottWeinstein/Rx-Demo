@@ -22,7 +22,7 @@ namespace DisplayUpdates
             builder.Register<Tuple<string,string>>(ctx => GetAuthKeys()).SingleInstance();
             
             //Observable.Never<TwitterStatus>()
-            builder.Register<ITwitterFeed>(ctx => (useTwitter) ? (ITwitterFeed)ctx.Resolve<TwitterFeed>() : (ITwitterFeed) ctx.Resolve<FakeTwitterFeed>()).SingleInstance();
+            builder.Register<ITwitterFeed>(ctx => (useTwitter) ? (ITwitterFeed)ctx.Resolve<TwitterFeedAsync>() : (ITwitterFeed) ctx.Resolve<FakeTwitterFeed>()).SingleInstance();
             builder.Register<IObservable<TwitterStatus>>(ctx => ctx.Resolve<ITwitterFeed>().Tweets);
 
             Container = builder.Build();
