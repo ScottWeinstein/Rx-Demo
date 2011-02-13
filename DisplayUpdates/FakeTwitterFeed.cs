@@ -9,7 +9,7 @@ namespace DisplayUpdates
         private readonly string[] _ScreenNames;
         public FakeTwitterFeed()
         {
-            _ScreenNames = new[] { "@A", "@B", "@C", "@D" };
+            _ScreenNames = new[] { "@A", "@B", "@C", "@D", "@E", "@F", "@G", "@H" };
             Random rnd = new Random();
             Tweets = Observable.GenerateWithTime(rnd.Next(),
                 _ => true,
