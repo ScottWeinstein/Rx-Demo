@@ -8,59 +8,66 @@ using System.Concurrency;
 
 namespace DisplayUpdates
 {
-    public interface ITwitterFeed
-    {
-        IObservable<TwitterStatus> Tweets { get; }
-    }
     public class TwitterFeed : ITwitterFeed 
     {
-        public TwitterFeed(Tuple<string,string> authKeys)
+        public TwitterFeed(Tuple<string, string> authKeys)
         {
             IScheduler sched = Scheduler.TaskPool;
+            TwitterService service = GetTwitterService(authKeys);
 
-            TwitterService service = new TwitterService(authKeys.Item1,authKeys.Item2);
+            IEnumerable<TwitterStatus> tweets = service.ListTweetsOnHomeTimeline();
+            var sinceId = GetMaxId(tweets, 0);
+
+            IObservable<TwitterStatus> futureTweets =
+                Observable.Create<TwitterStatus>(
+                obs =>
+                {
+                    bool isRunning = true;
+                    Action<Action<TimeSpan>> RecSelf = (self) =>
+                    {
+                        if (!isRunning)
+                            return;
+                        
+                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
+                        sinceId = GetMaxId(newtweets, sinceId);
+
+                        foreach (var tweet in newtweets)
+                        {
+                            obs.OnNext(tweet);
+                        }
+
+                        if (isRunning)
+                        {
+                            self(GetSleepTime(service, sched));
+                        }
+                        
+                    };
+                    sched.Schedule(RecSelf, GetSleepTime(service, sched));
+
+                    return () => { isRunning = false; };
+                });
+
+            Tweets = tweets.ToObservable().Concat(futureTweets)
+                    .ReplayLastByKey(tws => tws.User);
+        }
+
+        private static long GetMaxId(IEnumerable<TwitterStatus> newtweets, long sinceId)
+        {
+            var newId = newtweets.Select(ts => (long?)ts.Id).Max() ?? sinceId;
+            return newId;
+
+        }
+
+        private static TwitterService GetTwitterService(Tuple<string, string> authKeys)
+        {
+            TwitterService service = new TwitterService(authKeys.Item1, authKeys.Item2);
             OAuthRequestToken requestToken = service.GetRequestToken();
             Uri uri = service.GetAuthorizationUri(requestToken);
             var taw = new TwitterAuth() { AuthUrl = uri };
             taw.ShowDialog();
             OAuthAccessToken access = service.GetAccessToken(requestToken, taw.Token);
             service.AuthenticateWith(access.Token, access.TokenSecret);
-
-
-            IEnumerable<TwitterStatus> tweets = service.ListTweetsOnHomeTimeline();
-            var sinceId = tweets.Last().Id;
-            var futureTweets = Observable.Create<TwitterStatus>(obs =>
-            {
-                bool isRunning = true;
-
-                Action<Action<TimeSpan>> RecSelf = (self) =>
-                {
-                    if (isRunning)
-                    {
-                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
-                        if (newtweets.Any())
-                        {
-                            sinceId = newtweets.Last().Id;
-                            foreach (var tweet in newtweets)
-                            {
-                                obs.OnNext(tweet);
-                            }
-                        }
-
-                        TimeSpan sleepTime = GetSleepTime(service,sched);
-                        if (isRunning)
-                        {
-                            self(sleepTime);
-                        }
-                    }
-                };
-                sched.Schedule(RecSelf, GetSleepTime(service, sched));
-
-                return () => { isRunning = false; };
-            });
-
-            Tweets = tweets.ToObservable().Concat(futureTweets)
-                    .ReplayLastByKey(tws => tws.User);
+            return service;
         }
 
         private TimeSpan GetSleepTime(TwitterService service, IScheduler sched)

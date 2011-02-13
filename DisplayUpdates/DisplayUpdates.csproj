@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FakeTwitterFeed.cs" />
+    <Compile Include="ITwitterFeed.cs" />
     <Compile Include="RXX.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TwitterAuth.xaml.cs">
