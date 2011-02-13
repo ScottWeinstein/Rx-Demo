@@ -1,0 +1,10 @@
+﻿<Window x:Class="DisplayUpdates.TwitterAuth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TwitterAuth" Height="500" Width="900">
+    <StackPanel>
+        <WebBrowser x:Name="web" Height="400"></WebBrowser>
+        <TextBlock>Enter token:</TextBlock>
+        <TextBox Text="{Binding Token}"></TextBox>
+    </StackPanel>
+</Window>

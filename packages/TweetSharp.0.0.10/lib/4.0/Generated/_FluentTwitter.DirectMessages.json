@@ -1,0 +1,12 @@
+﻿// START GROUP
+DirectMessages
+// START GROUP METHODS
+Received:XML|JSON:IEnumerable<TwitterDirectMessage>:"direct_messages"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+Sent:XML|JSON:IEnumerable<TwitterDirectMessage>:"direct_messages/sent"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+Send:XML|JSON:TwitterDirectMessage:"direct_messages/new"|POST:long userId, string text
+Send:XML|JSON:TwitterDirectMessage:"direct_messages/new"|POST:string screenName, string text
+Destroy:XML|JSON:TwitterDirectMessage:"direct_messages/destroy"|DELETE:long id

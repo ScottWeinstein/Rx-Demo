@@ -61,7 +61,8 @@ namespace UnitTestingUICode
         public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay, IScheduler scheduler)
         {
             return keypresses.BufferWithTimeOrCount(delay, password.Length, scheduler)
-                            .SelectMany(a => a.Aggregate("", (acc, curr) => acc += curr))
+                            .Select(listStr => string.Join("",listStr.ToArray()))
+                           // .SelectMany(a => a.Aggregate("", (acc, curr) => acc += curr))
                             .Where(guess => guess != "")
                             .Select(guess => guess == password)
                             .DistinctUntilChanged();

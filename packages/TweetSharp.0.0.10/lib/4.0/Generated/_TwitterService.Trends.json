@@ -1,0 +1,20 @@
+﻿TwitterTrends, "trends/current", ListCurrentTrends
+TwitterTrends, "trends/current", ListCurrentTrends, string exclude
+
+TwitterTrends, "trends/daily", ListDailyTrends
+TwitterTrends, "trends/daily", ListDailyTrends, DateTime date
+TwitterTrends, "trends/daily", ListDailyTrends, string exclude
+TwitterTrends, "trends/daily", ListDailyTrends, DateTime date, string exclude
+
+TwitterTrends, "trends/weekly", ListWeeklyTrends
+TwitterTrends, "trends/weekly", ListWeeklyTrends, DateTime date
+TwitterTrends, "trends/weekly", ListWeeklyTrends, string exclude
+TwitterTrends, "trends/weekly", ListWeeklyTrends, DateTime date, string exclude
+
+IEnumerable<WhereOnEarthLocation>, "trends/available", ListAvailableTrendsLocations
+IEnumerable<WhereOnEarthLocation>, "trends/available", ListAvailableTrendsLocations, double lat
+IEnumerable<WhereOnEarthLocation>, "trends/available", ListAvailableTrendsLocations, double lat, double @long
+
+TwitterLocalTrends, "trends/{woe_id}", ListLocalTrendsFor, long woeId
+
+

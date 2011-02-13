@@ -4,4 +4,6 @@
 /UnitTestingUICode/obj/
 /bin/
 /UnitTestingUICode/obj/
-*.suo
+/*.suo
+/DisplayUpdates/obj/
+/DisplayUpdates/authkeys.txt

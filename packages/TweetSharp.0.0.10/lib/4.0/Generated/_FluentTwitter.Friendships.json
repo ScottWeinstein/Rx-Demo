@@ -1,0 +1,13 @@
+﻿// START GROUP
+Friendships
+// START GROUP METHODS
+Befriend:XML|JSON:TwitterUser:"friendships/create"|POST:int userId
+Befriend:XML|JSON:TwitterUser:"friendships/create"|POST:string screenName
+Destroy:XML|JSON:TwitterUser:"friendships/destroy"|DELETE:int userId
+Destroy:XML|JSON:TwitterUser:"friendships/destroy"|DELETE:string screenName
+Show:XML|JSON:TwitterCursorList<int>:"friendships/show":string sourceScreenName, string targetScreenName
+Show:XML|JSON:TwitterCursorList<int>:"friendships/show":int sourceId, int targetId
+Incoming:XML|JSON:TwitterCursorList<int>:"friendships/incoming"
+	GetCursor:long cursor
+Outgoing:XML|JSON:TwitterCursorList<int>:"friendships/outgoing"
+	GetCursor:long cursor

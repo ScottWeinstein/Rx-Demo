@@ -1,0 +1,12 @@
+﻿// START GROUP
+Account
+// START GROUP METHODS
+VerifyCredentials:XML|JSON:TwitterUser:"account/verify_credentials"
+EndSession:XML|JSON:TwitterError:"account/end_session"
+GetRateLimitStatus:XML|JSON:TwitterRateLimitStatus:"account/rate_limit_status"
+
+UpdateDeliveryDeviceTo:XML|JSON:TwitterUser:"account/update_delivery_device":TwitterDeliveryDevice device
+UpdateProfileColors:XML|JSON:TwitterUser:"account/update_profile_colors"
+UpdateProfileImage:XML|JSON:TwitterUser:"account/update_profile_image":string path
+UpdateProfileBackgroundImage:XML|JSON:TwitterUser:"account/update_profile_background_image":string path
+UpdateProfile:XML|JSON:TwitterUser:"account/update_profile"

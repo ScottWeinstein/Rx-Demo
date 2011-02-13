@@ -1,0 +1,32 @@
+﻿// START GROUP
+Statuses
+// START GROUP METHODS
+OnPublicTimeline:XML|JSON|RSS|ATOM:IEnumerable<TwitterStatus>:"statuses/public_timeline"
+
+OnFriendsTimeline:XML|JSON:IEnumerable<TwitterStatus>:"statuses/friends_timeline"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+OnHomeTimeline:XML|JSON:IEnumerable<TwitterStatus>:"statuses/home_timeline"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+OnUserTimeline:XML|JSON:IEnumerable<TwitterStatus>:"statuses/user_timeline"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+Mentions:XML|JSON:IEnumerable<TwitterStatus>:"statuses/mentions"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+RetweetedByMe:XML|JSON:IEnumerable<TwitterStatus>:"statuses/retweeted_by_me"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+RetweetedToMe:XML|JSON:IEnumerable<TwitterStatus>:"statuses/retweeted_to_me"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+Retweets:XML|JSON:IEnumerable<TwitterStatus>:"statuses/retweets"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+RetweetsOfMe:XML|JSON:IEnumerable<TwitterStatus>:"statuses/retweets_of_me"
+	Since:long sinceId, Before:long maxId, Skip: int page, Take: int count
+
+Show:XML|JSON:TwitterStatus:"statuses/show":long id
+Update:XML|JSON:TwitterStatus:"statuses/update"|POST:string status
+Destroy:XML|JSON:TwitterStatus:"statuses/destroy"|DELETE:long id

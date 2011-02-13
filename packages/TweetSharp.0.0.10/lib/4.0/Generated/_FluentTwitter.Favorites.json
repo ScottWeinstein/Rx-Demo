@@ -1,0 +1,11 @@
+﻿// START GROUP
+Favorites
+// START GROUP METHODS
+Get:XML|JSON:IEnumerable<TwitterStatus>:"favorites"
+	Skip: int page, Take: int count
+GetFor:XML|JSON:IEnumerable<TwitterStatus>:"favorites":string userScreenName
+	Skip: int page, Take: int count
+GetFor:XML|JSON:IEnumerable<TwitterStatus>:"favorites":int userId
+	Skip: int page, Take: int count
+Favorite:XML|JSON:TwitterStatus:"favorites/create"|POST:long id
+Unfavorite:XML|JSON:TwitterStatus:"favorites/destroy"|DELETE:long id

@@ -1,0 +1,9 @@
+﻿PublicTimeline, TwitterStatus, "statuses/public_timeline"
+HomeTimeline, TwitterStatus, "statuses/home_timeline", int page, int count, long sinceId, long maxId
+FriendsTimeline, TwitterStatus, "statuses/friends_timeline", int page, int count, long sinceId, long maxId
+UserTimeline, TwitterStatus, "statuses/user_timeline", int page, int count, long sinceId, long maxId
+Mentions, TwitterStatus, "statuses/mentions", int page, int count, long sinceId, long maxId
+RetweetedByMe, TwitterStatus, "statuses/retweeted_by_me", int page, int count, long sinceId, long maxId
+RetweetedToMe, TwitterStatus, "statuses/retweeted_to_me", int page, int count, long sinceId, long maxId
+Retweets, TwitterStatus, "statuses/retweets", int page, int count, long sinceId, long maxId
+RetweetedOfMe, TwitterStatus, "statuses/retweeted_of_me", int page, int count, long sinceId, long maxId

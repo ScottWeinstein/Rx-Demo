@@ -1,0 +1,12 @@
+﻿// START GROUP
+Blocks
+// START GROUP METHODS
+ListUsers:XML|JSON:IEnumerable<TwitterUser>:"blocks/blocking"
+	Skip: int page
+ListIds:XML|JSON:IEnumerable<int>:"blocks/blocking/ids"
+Block:XML|JSON:TwitterUser:"blocks/create"|POST:int userId
+Block:XML|JSON:TwitterUser:"blocks/create"|POST:string userScreenName
+Unblock:XML|JSON:TwitterUser:"blocks/destroy"|DELETE:int userId
+Unblock:XML|JSON:TwitterUser:"blocks/destroy"|DELETE:string userScreenName
+Exists:XML|JSON:TwitterUser:"blocks/exists":int userId
+Exists:XML|JSON:TwitterUser:"blocks/exists":string userScreenName
