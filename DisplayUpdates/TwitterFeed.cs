@@ -1,10 +1,9 @@
 using System;
-using TweetSharp;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Threading;
 using System.Concurrency;
+using System.Linq;
+using System.Net;
+using TweetSharp;
 
 namespace DisplayUpdates
 {
@@ -15,33 +14,52 @@ namespace DisplayUpdates
             IScheduler sched = Scheduler.TaskPool;
             TwitterService service = GetTwitterService(authKeys);
 
-            IEnumerable<TwitterStatus> tweets = service.ListTweetsOnHomeTimeline();
-            var startsinceId = GetMaxId(tweets, 0);
-            var state = new Tuple<TwitterService,long,IEnumerable<TwitterStatus>>(service,startsinceId,tweets);
-            IObservable<TwitterStatus> futureTweets = Observable.GenerateWithTime(state,
-                                                                                    _ => true,
-                                                                                    st =>
-                                                                                    {
-                                                                                        var sinceId = st.Item2;
-                                                                                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
-                                                                                        sinceId = GetMaxId(newtweets, sinceId);
-                                                                                        return new Tuple<TwitterService, long, IEnumerable<TwitterStatus>>(service, sinceId, newtweets);
-                                                                                    },
-                                                                                    st => st.Item3.ToObservable(),
-                                                                                    st => GetSleepTime(st.Item1, sched), 
-                                                                                    sched)
-                                                                .SelectMany(a => a);
+            var futureTweets = Observable.Create<TwitterStatus>(obs =>
+                {
+                    bool isRunning = true;
+                    long? sinceId = null;
 
-            Tweets = tweets.ToObservable()
-                           .Concat(futureTweets)
-                           .ReplayLastByKey(tws => tws.User);
-        }
+                    Action<Action<TimeSpan>> RecSelf = (self) =>
+                    {
+                        if (!isRunning)
+                            return;
 
-        private static long GetMaxId(IEnumerable<TwitterStatus> newtweets, long sinceId)
-        {
-            var newId = newtweets.Select(ts => (long?)ts.Id).Max() ?? sinceId;
-            return newId;
+                        Action<IEnumerable<TwitterStatus>, TwitterResponse> processNewTweets = 
+                            (newtweets, response) => 
+                            {
+                                if (response.StatusCode == HttpStatusCode.OK)
+                                {
+                                    sinceId = newtweets.Select(ts => (long?)ts.Id).Max() ?? sinceId;
+                                    foreach (var tweet in newtweets)
+                                    {
+                                        obs.OnNext(tweet);
+                                    }
+                                }
+                                else
+                                {
+                                    obs.OnError(response.InnerException);
+                                }
 
+                                if (isRunning)
+                                {
+                                    self(GetSleepTime(response.RateLimitStatus,sched));
+                                }
+                            };
+
+                        if (sinceId.HasValue)
+                        {
+                            service.ListTweetsOnHomeTimelineSince((long)sinceId, processNewTweets);
+                        }else
+                        {
+                            service.ListTweetsOnHomeTimeline(processNewTweets);
+                        }
+                    };
+
+                    sched.Schedule(RecSelf, GetSleepTime(service, sched));
+                    return () => { isRunning = false; };
+                });
+            
+            Tweets = futureTweets.ReplayLastByKey(tws => tws.User);
         }
 
         private static TwitterService GetTwitterService(Tuple<string, string> authKeys)
@@ -59,11 +77,18 @@ namespace DisplayUpdates
         private TimeSpan GetSleepTime(TwitterService service, IScheduler sched)
         {
             TwitterRateLimitStatus rls = service.Response.RateLimitStatus;
+            return GetSleepTime(rls, sched);
+        }
+        
+        private static TimeSpan GetSleepTime(TwitterRateLimitStatus rls, IScheduler sched)
+        {
+            if (rls.HourlyLimit == -1)
+                return TimeSpan.Zero;
+
             TimeSpan timeTillReset = rls.ResetTime - sched.Now;
             var secondsOfSleepTime = timeTillReset.TotalSeconds / (rls.RemainingHits == 0 ? 1 : rls.RemainingHits);
             return TimeSpan.FromSeconds(secondsOfSleepTime);
         }
-        
 
         public IObservable<TwitterStatus> Tweets { get; private set; }
     }
@@ -97,3 +122,21 @@ Observable.Create<TwitterStatus>(
                     return () => { isRunning = false; };
                 });
 */
+
+
+/* Generate With Time
+IObservable<TwitterStatus> futureTweets = Observable.GenerateWithTime(state,
+                                                                                    _ => true,
+                                                                                    st =>
+                                                                                    {
+                                                                                        var sinceId = st.Item2;
+                                                                                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
+                                                                                        sinceId = GetMaxId(newtweets, sinceId);
+                                                                                        return new Tuple<TwitterService, long, IEnumerable<TwitterStatus>>(service, sinceId, newtweets);
+                                                                                    },
+                                                                                    st => st.Item3.ToObservable(),
+                                                                                    st => GetSleepTime(st.Item1, sched), 
+                                                                                    sched)
+                                                                .SelectMany(a => a);
+
+            */
