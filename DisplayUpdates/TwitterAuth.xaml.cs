@@ -12,7 +12,7 @@ namespace DisplayUpdates
 
         #region DP AuthUrl
 
-        public static readonly DependencyProperty AuthUrlProperty = DependencyProperty.Register("AuthUrl", typeof(Uri), typeof(TwitterAuth), new UIPropertyMetadata(null, new PropertyChangedCallback(OnAuthUrlChanged), new CoerceValueCallback(OnCoerceAuthUrl)));
+        public static readonly DependencyProperty AuthUrlProperty = DependencyProperty.Register("AuthUrl", typeof(Uri), typeof(TwitterAuth), new UIPropertyMetadata(null, OnAuthUrlChanged, OnCoerceAuthUrl));
 
         private static object OnCoerceAuthUrl(DependencyObject o, object value)
         {
@@ -37,7 +37,7 @@ namespace DisplayUpdates
 
         protected virtual void OnAuthUrlChanged(Uri oldValue, Uri newValue)
         {
-            this.web.Navigate(newValue);
+            web.Navigate(newValue);
         }
 
         public Uri AuthUrl
@@ -54,7 +54,7 @@ namespace DisplayUpdates
         #endregion
 
         #region DP Token string
-        public static readonly DependencyProperty TokenProperty = DependencyProperty.Register("Token", typeof(string), typeof(TwitterAuth), new UIPropertyMetadata(string.Empty, new PropertyChangedCallback(OnTokenChanged), new CoerceValueCallback(OnCoerceToken)));
+        public static readonly DependencyProperty TokenProperty = DependencyProperty.Register("Token", typeof(string), typeof(TwitterAuth), new UIPropertyMetadata(string.Empty, OnTokenChanged, OnCoerceToken));
 
         private static object OnCoerceToken(DependencyObject o, object value)
         {
@@ -94,7 +94,5 @@ namespace DisplayUpdates
         }
         
         #endregion
-        
-
     }
 }

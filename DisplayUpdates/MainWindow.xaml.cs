@@ -9,7 +9,7 @@ namespace DisplayUpdates
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = App.Container.Resolve<TwitterFeedVM>();
+            DataContext = App.Container.Resolve<TwitterFeedVM>();
         }
         
     }

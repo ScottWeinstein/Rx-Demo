@@ -1,8 +1,6 @@
 using System;
-using TweetSharp;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Collections.Generic;
+using TweetSharp;
 
 namespace DisplayUpdates
 {

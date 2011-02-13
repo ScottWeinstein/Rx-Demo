@@ -101,7 +101,6 @@
     <Compile Include="FakeTwitterFeed.cs" />
     <Compile Include="ITwitterFeed.cs" />
     <Compile Include="RXX.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="TwitterAuth.xaml.cs">
       <DependentUpon>TwitterAuth.xaml</DependentUpon>
     </Compile>
@@ -142,7 +141,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -17,7 +17,7 @@ namespace DisplayUpdates
             var useTwitter = DisplayUpdates.Properties.Settings.Default.UseTwitter;
 
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(this.GetType().Assembly);
+            builder.RegisterAssemblyTypes(GetType().Assembly);
 
             builder.Register<Tuple<string,string>>(ctx => GetAuthKeys()).SingleInstance();
             
@@ -28,7 +28,7 @@ namespace DisplayUpdates
             Container = builder.Build();
         }
 
-        public Tuple<string,string> GetAuthKeys()
+        public static Tuple<string,string> GetAuthKeys()
         {
             var lines = System.IO.File.ReadAllLines(@"..\..\DisplayUpdates\authkeys.txt").Select(item=> item.Trim());
             return new Tuple<string,string>(lines.First(),lines.Last());

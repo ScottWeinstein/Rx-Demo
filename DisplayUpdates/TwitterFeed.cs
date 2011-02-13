@@ -75,7 +75,7 @@ namespace DisplayUpdates
             return service;
         }
 
-        private TimeSpan GetSleepTime(TwitterService service, IScheduler sched)
+        private static TimeSpan GetSleepTime(TwitterService service, IScheduler sched)
         {
             TwitterRateLimitStatus rls = service.Response.RateLimitStatus;
             return GetSleepTime(rls, sched);
