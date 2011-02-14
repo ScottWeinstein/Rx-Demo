@@ -1,10 +1,8 @@
 
-/PollingWS/obj/
-/Tests/obj/
-/UnitTestingUICode/obj/
+
 /bin/
-/UnitTestingUICode/obj/
-/*.suo
-/DisplayUpdates/obj/
+*.suo
+*.csproj.user
 /DisplayUpdates/authkeys.txt
 /Tests/
+*obj/

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == '' ">Debug</Configuration>
+  </PropertyGroup>
+  <UsingTask  AssemblyFile="..\3rdParty\xUnit\xunit.runner.msbuild.dll"  TaskName="Xunit.Runner.MSBuild.xunit" />
+
+  <Target Name="Build">
+    <MSBuild Projects="RXDemos.sln" Properties="Configuration=$(Configuration)" />
+    <CallTarget Targets="Test" />
+  </Target>
+
+  <Target Name="Test" >
+    <ItemGroup>
+      <TestAssemblies Include="bin\$(Configuration)\RxDemo*.dll"/>
+      <TestAssemblies Include="bin\$(Configuration)\RxDemo*.exe"  />
+    </ItemGroup>
+    <xunit Assembly="%(TestAssemblies.FullPath)"  />
+  </Target>
+</Project>

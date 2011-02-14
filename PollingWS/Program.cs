@@ -8,7 +8,7 @@ namespace PollingWS
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             ConsWL(ConsoleColor.White, "" + Thread.CurrentThread.ManagedThreadId);
             //Traditional();
@@ -19,18 +19,19 @@ namespace PollingWS
         #region RX
         private static void Rx(IObservable<string> rxUserKeys, TimeSpan ts)
         {
-            var rxTicks = Observable.Interval(TimeSpan.FromMilliseconds(10000)).Select(_ => "scheduled");
+            var rxTicks = Observable.Interval(TimeSpan.FromMilliseconds(20000)).Select(_ => "scheduled");
             
             Observable.Merge(rxTicks, rxUserKeys)
                       .Throttle(ts)
-                      .Subscribe(GetSomeSlowData);
+                      .Select(a => GetSomeSlowData(a))
+                      .Subscribe(Console.WriteLine);
         }
 
         private static IObservable<string> RxUserKeys
         {
             get
             {
-                return Observable.Create<string>(subscribe: obs =>
+                return Observable.Create<string>(obs =>
                                 {
                                     bool shouldRun = true;
                                     while (shouldRun)
@@ -48,7 +49,7 @@ namespace PollingWS
         #region Traditional
         private static void Traditional()
         {
-            var timer = new System.Timers.Timer(10000);
+            var timer = new System.Timers.Timer(20000);
             timer.Elapsed += (sender, e) =>
             {
                 GetSomeSlowDataTraditional("scheduled");
@@ -68,7 +69,7 @@ namespace PollingWS
             if (!isRunning)
             {
                 isRunning = true;
-                Task.Factory.StartNew(() => GetSomeSlowData(sender))
+                Task.Factory.StartNew<int>(() => GetSomeSlowData(sender))
                     .ContinueWith(tsk => { isRunning = false; });
             }
         }
@@ -76,11 +77,12 @@ namespace PollingWS
 
         #region Commmon Helpers
 
-        private static void GetSomeSlowData(string sender)
+        private static int GetSomeSlowData(string sender)
         {
             ConsWL(ConsoleColor.Green, sender);
             Thread.Sleep(3000);
             ConsWL(ConsoleColor.Yellow, "\n{0} Exit timer", Thread.CurrentThread.ManagedThreadId);
+            return 42; ;
         }
 
         private static void ConsWL(ConsoleColor color, string ftm, params object[] args)

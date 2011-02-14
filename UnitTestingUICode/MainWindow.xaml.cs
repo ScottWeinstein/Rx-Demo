@@ -76,6 +76,7 @@ namespace UnitTestingUICode
         {
             return keypresses.BufferWithTimeOrCount(delay, password.Length, scheduler)
                             .Select(listStr => string.Join("", listStr.ToArray()))
+                            .Do(guess => EnteredPassKey = guess)
                             .Where(guess => guess != "")
                             .Select(guess => guess == password)
                             .DistinctUntilChanged();
@@ -86,7 +87,7 @@ namespace UnitTestingUICode
 
         public bool CheckPasskey(string enteredPassKey)
         {
-            IsCorrectPassKey = enteredPassKey == "12345";
+            IsCorrectPassKey = enteredPassKey == "1234";
             return IsCorrectPassKey;
         }
 
