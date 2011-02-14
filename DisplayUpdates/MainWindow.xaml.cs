@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Autofac;
+using System.Diagnostics;
+using System.Threading;
 
 namespace DisplayUpdates
 {

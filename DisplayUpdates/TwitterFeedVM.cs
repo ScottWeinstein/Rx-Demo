@@ -9,11 +9,9 @@ namespace DisplayUpdates
         public TwitterFeedVM(IObservable<TwitterStatus> tweetxs)
         {
             Tweets = new ObservableCollection<TwitterStatus>();
-            Tweets.MergeInsert(tweetxs, tws => tws.User);
+            Tweets.MergeInsert(tweetxs, tws => tws.User.Id);
         }
 
         public ObservableCollection<TwitterStatus> Tweets { get; private set; }
-
-
     }
 }

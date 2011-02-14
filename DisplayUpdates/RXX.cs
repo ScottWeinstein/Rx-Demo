@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Threading;
+using System.Diagnostics;
+using System.Threading;
 
 namespace DisplayUpdates
 {
@@ -29,8 +32,6 @@ namespace DisplayUpdates
                 }
                 else
                 {
-                    col.RemoveAt(index);
-                    col.Insert(index, item);
                     col[index] = item;
                 }
             });

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="920">
     <StackPanel>
-        <ListBox ItemsSource="{Binding Tweets}" SelectionMode="Single" >
+        <ListBox ItemsSource="{Binding Path=Tweets}" SelectionMode="Single" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left"  Margin="10,10,0,0" VerticalAlignment="Top" 

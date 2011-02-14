@@ -23,7 +23,7 @@ namespace DisplayUpdates
         {
             int index = ii % _ScreenNames.Length;
             TwitterUser newUser = new TwitterUser { Id = index, ScreenName = _ScreenNames[index] };
-            return new TwitterStatus { User = newUser, Text = " " + ii };
+            return new TwitterStatus { Id = ii, User = newUser, Text = " " + ii };
         }
 
         public IObservable<TwitterStatus> Tweets
