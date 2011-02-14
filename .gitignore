@@ -1,8 +1,6 @@
-
-
-/bin/
 *.suo
 *.csproj.user
+*obj/
+/bin/
 /DisplayUpdates/authkeys.txt
 /Tests/
-*obj/
