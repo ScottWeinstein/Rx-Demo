@@ -3,6 +3,8 @@ using System.Windows;
 using Autofac;
 using TweetSharp;
 using System.Linq;
+using DisplayUpdates.Properties;
+using System.IO;
 
 namespace DisplayUpdates
 {
@@ -14,24 +16,33 @@ namespace DisplayUpdates
         {
             base.OnStartup(e);
 
-            var useTwitter = DisplayUpdates.Properties.Settings.Default.UseTwitter;
+            var useTwitter = Settings.Default.UseTwitter;
 
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(GetType().Assembly);
+            builder.Register<Tuple<string, string>>(ctx => GetAuthKeys()).SingleInstance();
 
-            builder.Register<Tuple<string,string>>(ctx => GetAuthKeys()).SingleInstance();
-            
             //Observable.Never<TwitterStatus>()
-            builder.Register<ITwitterFeed>(ctx => (useTwitter) ? (ITwitterFeed)ctx.Resolve<TwitterFeedAsync>() : (ITwitterFeed) ctx.Resolve<FakeTwitterFeed>()).SingleInstance();
+            builder.Register<ITwitterFeed>(ctx => OnStartupExtracted(ctx,useTwitter)).SingleInstance();
             builder.Register<IObservable<TwitterStatus>>(ctx => ctx.Resolve<ITwitterFeed>().Tweets);
 
             Container = builder.Build();
         }
 
-        public static Tuple<string,string> GetAuthKeys()
+        private static ITwitterFeed OnStartupExtracted(IComponentContext ctx, bool useTwitter)
         {
-            var lines = System.IO.File.ReadAllLines(@"..\..\DisplayUpdates\authkeys.txt").Select(item=> item.Trim());
-            return new Tuple<string,string>(lines.First(),lines.Last());
+            if (useTwitter)
+                return ctx.Resolve<TwitterFeedAsync>();
+            else
+                return ctx.Resolve<FakeTwitterFeed>();
+        }
+
+        public static Tuple<string, string> GetAuthKeys()
+        {
+            var lines = File.ReadAllLines(@"..\..\DisplayUpdates\authkeys.txt")
+                            .Select(item => item.Trim());
+            
+            return new Tuple<string, string>(lines.First(), lines.Last());
         }
 
     }

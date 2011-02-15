@@ -7,16 +7,21 @@ namespace DisplayUpdates
     public class FakeTwitterFeed : ITwitterFeed
     {
         private readonly string[] _ScreenNames;
+
         public FakeTwitterFeed()
         {
             _ScreenNames = new[] { "@A", "@B", "@C", "@D", "@E", "@F", "@G", "@H" };
             Random rnd = new Random();
-            Tweets = Observable.GenerateWithTime(rnd.Next(),
-                _ => true,
-                _ => rnd.Next(),
-                MakeTwitterStatus,
-                _ => TimeSpan.FromSeconds(0.1))
-                .ReplayLastByKey(tws => tws.User);
+
+            Tweets = Observable.GenerateWithTime<int, TwitterStatus>(
+                         initialState: rnd.Next(),
+                         condition: _ => true,
+                         iterate: _ => rnd.Next(),
+                         resultSelector: MakeTwitterStatus,
+                         timeSelector: _ => TimeSpan.FromSeconds(0.1))
+                .ReplayLastByKey(tws => tws.User)
+                .Publish()
+                .RefCount();
         }
 
         private TwitterStatus MakeTwitterStatus(int ii)
