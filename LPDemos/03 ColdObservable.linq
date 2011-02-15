@@ -9,5 +9,5 @@ var qry = Observable
 		.Range(1,3)
 		.Select(ii=> new {Index=ii, Random = rnd.Next()});
 
-qry.Dump();
 qry.Where(item => item.Index == 1).Dump();
+qry.Dump();
