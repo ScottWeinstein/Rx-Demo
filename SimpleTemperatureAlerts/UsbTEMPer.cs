@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-
 namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+
     public class UsbTEMPer : IDisposable
     {
         private double _compensator;
@@ -33,10 +33,10 @@ namespace RXDemo
             {
                 throw new InvalidOperationException("the type is not temper");
             }
+
             _compensator = (upd[2] >= 10) & (upd[2] <= 0x1d) ? Convert.ToDouble(String.Format("{0}.{1}", upd[2], upd[3])) - 20.0 : 0.0;
-
-
         }
+
         public double GetTemperature()
         {
             return GetTempReadings()
@@ -54,11 +54,11 @@ namespace RXDemo
             }
         }
 
-
         internal static IEnumerable<string> FindDevices()
         {
             return FindDevices(IntPtr.Zero);
         }
+
         public static IEnumerable<string> FindDevices(IntPtr hndl)
         {
             int devCount = HIDFT.EMyDetectDevice((long)hndl); 
@@ -101,10 +101,6 @@ namespace RXDemo
             [DllImport("HidFTDll.dll", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
             public static extern bool EMyWriteTempText(bool flag);
         }
-
-
         #endregion
-
-        
     }
 }

@@ -3,6 +3,8 @@
 /bin/
 *.suo
 *.csproj.user
+#*/StyleCop.Cache
+StyleCop.Cache
 /DisplayUpdates/authkeys.txt
 /Tests/
 *obj/

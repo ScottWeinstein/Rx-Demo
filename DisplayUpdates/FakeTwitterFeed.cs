@@ -1,9 +1,9 @@
-using System;
-using TweetSharp;
-using System.Linq;
-
 namespace DisplayUpdates
 {
+    using System;
+    using TweetSharp;
+    using System.Linq;
+
     public class FakeTwitterFeed : ITwitterFeed
     {
         private readonly string[] _ScreenNames;

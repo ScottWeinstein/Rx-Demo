@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
 namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
     public static class RXX
     {
         public static IDisposable MergeInsert<T, TKey>(this ObservableCollection<T> col, IObservable<T> stream, Func<T, TKey> keySelector)
@@ -44,7 +44,6 @@ namespace RXDemo
                     });
         }
 
-
         public static IObservable<double> StdDev(this IObservable<double> source)
         {
             var temp = new { N = 0, Mean = 0d, M2 = 0d };
@@ -59,9 +58,8 @@ namespace RXDemo
                     Mean = meanp,
                     M2 = cur.M2 + delta * (next - meanp)
                 };
-            }).Select(it => Math.Sqrt(it.M2 / (it.N)));
+            }).Select(it => Math.Sqrt(it.M2 / it.N));
         }
-
 
         public static IObservable<double> Mean(this IObservable<double> source)
         {
@@ -78,6 +76,5 @@ namespace RXDemo
                 };
             }).Select(it => it.Mean);
         }
-
     }
 }

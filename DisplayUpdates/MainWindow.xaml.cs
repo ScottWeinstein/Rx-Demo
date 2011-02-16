@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows;
-using Autofac;
-using System.Diagnostics;
-using System.Threading;
-
-namespace DisplayUpdates
+﻿namespace DisplayUpdates
 {
+    using System;
+    using System.Windows;
+    using Autofac;
+    using System.Diagnostics;
+    using System.Threading;
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -13,6 +13,5 @@ namespace DisplayUpdates
             InitializeComponent();
             DataContext = App.Container.Resolve<TwitterFeedVM>();
         }
-        
     }
 }

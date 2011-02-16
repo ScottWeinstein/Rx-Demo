@@ -1,8 +1,8 @@
-using System;
-using System.Linq;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+
     public class WhereObserverPedantic<T> : IObserver<T>
     {
         private IObserver<T> _downStreamObserver;
@@ -13,6 +13,7 @@ namespace RXDemo
             _pred = pred;
             _downStreamObserver = downStreamObserver;
         }
+
         public void OnNext(T value)
         {
             if (_pred(value))
@@ -23,6 +24,5 @@ namespace RXDemo
 
         public void OnCompleted() { }
         public void OnError(Exception error) { }
-
     }
 }

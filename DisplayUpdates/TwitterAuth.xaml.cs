@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows;
-
-namespace DisplayUpdates
+﻿namespace DisplayUpdates
 {
+    using System;
+    using System.Windows;
+
     public partial class TwitterAuth : Window
     {
         public TwitterAuth()
@@ -46,6 +46,7 @@ namespace DisplayUpdates
             {
                 return (Uri)GetValue(AuthUrlProperty);
             }
+
             set
             {
                 SetValue(AuthUrlProperty, value);
@@ -87,6 +88,7 @@ namespace DisplayUpdates
             {
                 return (string)GetValue(TokenProperty);
             }
+
             set
             {
                 SetValue(TokenProperty, value);

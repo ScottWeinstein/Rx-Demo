@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Collections.ObjectModel;
-using System.IO;
-
 namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Collections.ObjectModel;
+    using System.IO;
+
     public class FSViewModel : DependencyObject
     {
         public ObservableCollection<FileChangeFact> FSItems { get; set; }
@@ -17,7 +17,6 @@ namespace RXDemo
         public FSViewModel(IObservable<IEvent<RoutedEventArgs>> uiAddQuery)
         {
             _storeSubject = GetFileSystemStream().Replay();
-
 
             //Compute aggregates  - 1st attempt
             IObservable<double> fileLenthgs = _storeSubject.Select(fcf => (double)fcf.Length);
@@ -35,9 +34,6 @@ namespace RXDemo
             IObservable<FileChangeAggregate> aggCountSumMeanStdDev = 
                 aggCountSumMean.Zip(fileLenthgs.StdDev(), (fca, stddev) => { fca.StdDev = stddev; return fca; });
 
-
-
-
             uiAddQuery.Subscribe(_ignore =>
             {
                 Func<FileChangeFact, bool> fltr = _ => true;
@@ -48,9 +44,7 @@ namespace RXDemo
                 }
 
                 QuerySubscriptions.Add(new QuerySubscriptionDO(FilterPath, _storeSubject.Where(fltr)));
-
             });
-
 
             //Wire up UI
             FSItems = new ObservableCollection<FileChangeFact>();
@@ -63,7 +57,6 @@ namespace RXDemo
 
         public static IObservable<FileChangeFact> GetFileSystemStream()
         {
-
             IEnumerable<FileSystemWatcher> seqFSWatchers =
                         from drive in DriveInfo.GetDrives()
                         where drive.DriveType == DriveType.Fixed
@@ -78,7 +71,6 @@ namespace RXDemo
                         from FSWatcher in seqFSWatchers
                         from eventType in new string[] { "Changed", "Deleted", "Created" }
                         select Observable.FromEvent<FileSystemEventArgs>(FSWatcher, eventType);
-
 
             IObservable<IEvent<FileSystemEventArgs>> fsEventsMerged = Observable.Merge(seqfsEventsAsObservables);
 
@@ -97,10 +89,9 @@ namespace RXDemo
                             });
             return fsChanges;
         }
-
  
         #region DP FilterPath string
-        public static readonly DependencyProperty FilterPathProperty = DependencyProperty.Register("FilterPath", typeof(string), typeof(FSViewModel), new UIPropertyMetadata(""));
+        public static readonly DependencyProperty FilterPathProperty = DependencyProperty.Register("FilterPath", typeof(string), typeof(FSViewModel), new UIPropertyMetadata(string.Empty));
 
         public string FilterPath
         {
@@ -109,6 +100,7 @@ namespace RXDemo
             {
                 return (string)GetValue(FilterPathProperty);
             }
+
             set
             {
                 SetValue(FilterPathProperty, value);
@@ -126,18 +118,15 @@ namespace RXDemo
             {
                 return (FileChangeAggregate)GetValue(TotalAggregateProperty);
             }
+
             set
             {
                 SetValue(TotalAggregateProperty, value);
             }
         }
         #endregion
-        
-        
     }
 }
-
-
 //IEnumerable<IObservable<IEvent<FileSystemEventArgs>>> fsEventsAsObservables =
 //    seqFSWatchers
 //            .SelectMany(FSWatcher => fsEventTypes.Select(eventType => Observable.FromEvent<FileSystemEventArgs>(FSWatcher, eventType)));

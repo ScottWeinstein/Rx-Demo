@@ -1,12 +1,11 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+
     public static class CustomWhereCombinator
     {
-
         public static IObservable<T> CustomWherePedantic<T>(this IObservable<T> stream, Func<T, bool> pred)
         {
             return new WhereObservablePedantic<T>(stream, pred);
@@ -29,7 +28,6 @@ namespace RXDemo
                                     }));
         }
 
-
         public static IEnumerable<T> CustomWhere<T>(this IEnumerable<T> source, Predicate<T> pred)
         {
             foreach (T item in source)
@@ -43,9 +41,5 @@ namespace RXDemo
         {
             return new WhereEnumerable<T>(source, pred);
         }
-
-
-
     }
-
 }

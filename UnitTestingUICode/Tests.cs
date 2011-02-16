@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Concurrency;
-using System.Reactive.Testing;
-using Xunit;
-
 namespace UnitTestingUICode
 {
-    public class Tests: RxTestBase
+    using System;
+    using System.Collections.Generic;
+    using System.Concurrency;
+    using System.Reactive.Testing;
+    using Xunit;
+
+    public class Tests : RxTestBase
     {
         private readonly MainWindow _window;
         private readonly TestScheduler _scheduler;
@@ -28,14 +28,15 @@ namespace UnitTestingUICode
                              OnNext(240, "4"));
 
             Func<IObservable<bool>> target = () => 
-                _window.DetectCorrectKeypass(ioKeys, 
+                _window.DetectCorrectKeypass(
+                    ioKeys, 
                     "1234", 
                     TimeSpan.FromTicks(50), 
                     _scheduler);
 
             // Act
             IEnumerable<Recorded<Notification<bool>>> actuals = 
-                _scheduler.Run( target );
+                _scheduler.Run(target);
             
             // Assert
             actuals.AssertEqual(OnNext(240, true));

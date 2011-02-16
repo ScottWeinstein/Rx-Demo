@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Diagnostics;
-
-namespace RXDemo
+﻿namespace RXDemo
 {
-    class CustomWhereCombinatorDemo
+    using System;
+    using System.Linq;
+    using System.Diagnostics;
+
+    public class CustomWhereCombinatorDemo
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Observable.Range(1, 200)
                         //.Where(val => val > 190)
@@ -15,11 +15,8 @@ namespace RXDemo
                         //.CustomWhere(val => val > 190)
                       .Subscribe(Console.WriteLine);
 
-
-
             Console.WriteLine("press any key");
             Console.ReadKey();
         }
     }
-
 }

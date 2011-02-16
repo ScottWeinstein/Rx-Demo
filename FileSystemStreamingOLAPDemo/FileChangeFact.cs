@@ -1,8 +1,8 @@
-using System;
-using System.IO;
-
 namespace RXDemo
 {
+    using System;
+    using System.IO;
+
     public class FileChangeFact
     {
         public WatcherChangeTypes ChangeType { get; set; }

@@ -1,17 +1,17 @@
-﻿using System;
-using System.Disposables;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace PollingWS
+﻿namespace PollingWS
 {
-    class Program
+    using System;
+    using System.Disposables;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             //Traditional();
-            Rx(RxUserKeys,TimeSpan.FromMilliseconds(500));
+            Rx(RxUserKeys, TimeSpan.FromMilliseconds(500));
             Console.ReadKey();
         }
 
@@ -39,6 +39,7 @@ namespace PollingWS
                                         Console.ReadKey();
                                         obs.OnNext("ButtonClick");
                                     }
+
                                     return () => { shouldRun = false; };
                                 });
             }
@@ -63,7 +64,8 @@ namespace PollingWS
             }
         }
 
-        static volatile bool isRunning = false;
+        private static volatile bool isRunning = false;
+
         private static void GetSomeSlowDataTraditional(string sender)
         {
             if (!isRunning)
@@ -82,7 +84,7 @@ namespace PollingWS
             ConsWL(ConsoleColor.Green, sender);
             Thread.Sleep(3000);
             ConsWL(ConsoleColor.Yellow, "\n{0} Exit timer", Thread.CurrentThread.ManagedThreadId);
-            return 42; ;
+            return 42;
         }
 
         private static void ConsWL(ConsoleColor color, string ftm, params object[] args)
@@ -92,6 +94,7 @@ namespace PollingWS
                 Console.WriteLine(ftm, args);
             }
         }
+
         public static IDisposable ChangeConsoleColor(ConsoleColor newcolor)
         {
             var color = Console.ForegroundColor;

@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TweetSharp;
-
 namespace DisplayUpdates
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TweetSharp;
+
     public class TwitterFeedGenerateSync : TwitterFeedBase
     {
         public TwitterFeedGenerateSync(Tuple<string, string> authKeys)

@@ -1,18 +1,17 @@
-﻿using RXDemo;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-
-namespace RXDemo
+﻿namespace RXDemo
 {
-    class AsyncDownload
-    {
-        static void Main(string[] args)
-        {
+    using RXDemo;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Threading;
 
+    public class AsyncDownload
+    {
+        public static void Main(string[] args)
+        {
             // method 1 - all sync code
             Func<string, string> UrlToHtml = (url) =>
             {
@@ -42,39 +41,26 @@ namespace RXDemo
                                                 WebRequest.Create(url)
                                                 .GetResponseAsync()
                                                 .SelectMany(wr => wr.GetResponseStream().ToObservable())
-                                                .Select(buff => UTF8Encoding.UTF8.GetString(buff))
-                                                ;
-
+                                                .Select(buff => UTF8Encoding.UTF8.GetString(buff));
 
             Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
             IObservable<string> urls = new string[] { "http://slate.com", "http://google.com", "http://bing.com", "http://weblogs.asp.net/" }
-                                 .ToObservable()
+                                 .ToObservable();
                 //.Repeat()
                 //.Take(100)
-                                ;
-
 
             var r2 = from url in urls
                      let ostream = UrlToHTMLAsObservableString(url)
                      from str in ostream
-                     select new { Url = url, HTML = str }
-                     ;
-
-    
-            
+                     select new { Url = url, HTML = str };
         
             var r3 = urls
                         .Select(url => new { _url = url, _ostream = UrlToHTMLAsObservableStringxs(url) })
-                        .SelectMany((pair) => pair._ostream, (pair, html) => new { Url = pair._url, HTML = html })
-                    ;
+                        .SelectMany((pair) => pair._ostream, (pair, html) => new { Url = pair._url, HTML = html });
 
            r3.Subscribe(pair => Console.WriteLine(pair.Url + pair.HTML));
            Console.WriteLine("press any key");
            Console.ReadKey();
         }
-
-        
-
     }
-    
 }
