@@ -10,7 +10,6 @@ namespace PollingWS
     {
         static void Main()
         {
-            ConsWL(ConsoleColor.White, "" + Thread.CurrentThread.ManagedThreadId);
             //Traditional();
             Rx(RxUserKeys,TimeSpan.FromMilliseconds(500));
             Console.ReadKey();
@@ -19,7 +18,8 @@ namespace PollingWS
         #region RX
         private static void Rx(IObservable<string> rxUserKeys, TimeSpan ts)
         {
-            var rxTicks = Observable.Interval(TimeSpan.FromMilliseconds(20000)).Select(_ => "scheduled");
+            var rxTicks = Observable.Interval(TimeSpan.FromMilliseconds(20000))
+                                    .Select(_ => "scheduled");
             
             Observable.Merge(rxTicks, rxUserKeys)
                       .Throttle(ts)

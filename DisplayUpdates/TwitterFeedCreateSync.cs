@@ -10,38 +10,44 @@ namespace DisplayUpdates
     {
         public TwitterFeedCreateSync(Tuple<string, string> authKeys):base(authKeys)
         {
-             IEnumerable<TwitterStatus> tweets = service.ListTweetsOnHomeTimeline();
+             IEnumerable<TwitterStatus> tweets = 
+                 service.ListTweetsOnHomeTimeline();
              long sinceId = GetMaxId(tweets, 0);
-            
-            var futureTweets = Observable.Create<TwitterStatus>( obs =>
-                {
-                    bool isRunning = true;
-                    Action<Action<TimeSpan>> RecSelf = (self) =>
-                    {
-                        if (!isRunning)
-                            return;
 
-                        var newtweets = service.ListTweetsOnHomeTimelineSince(sinceId);
-                        sinceId = GetMaxId(newtweets,sinceId);
-                        foreach (var tweet in newtweets)
-                        {
-                            obs.OnNext(tweet);
-                        }
+             var futureTweets =
+             Observable.Create<TwitterStatus>(
+             obs =>
+             {
+                 bool isRunning = true;
+                 Action<Action<TimeSpan>> RecSelf = (self) =>
+                 {
+                     if (!isRunning)
+                         return;
 
-                        if (isRunning)
-                        {
-                            self(GetSleepTime(service, sched));
-                        }
+                     var newtweets = 
+                         service.ListTweetsOnHomeTimelineSince(sinceId);
+                     sinceId = GetMaxId(newtweets, sinceId);
+                     foreach (var tweet in newtweets)
+                     {
+                         obs.OnNext(tweet);
+                     }
 
-                    };
-                    sched.Schedule(RecSelf, GetSleepTime(service, sched));
+                     if (isRunning)
+                     {
+                         self(GetSleepTime(service, sched));
+                     }
 
-                    return () => { isRunning = false; };
-                });
+                 };
+                 sched.Schedule(RecSelf, GetSleepTime(service, sched));
 
-            Tweets = tweets.ToObservable().Concat(futureTweets)
-                     .ReplayLastByKey(tws => tws.User);
+                 return () => { isRunning = false; };
+             });
 
+             Tweets = tweets.ToObservable()
+                            .Concat(futureTweets)
+                            .ReplayLastByKey(tws => tws.User)
+                            .Publish()
+                            .RefCount();
         }
     }
 }

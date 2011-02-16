@@ -13,7 +13,8 @@ namespace DisplayUpdates
         public static IObservable<T> ReplayLastByKey<T, TKey>(this IObservable<T> source, Func<T, TKey> keySelector)
         {
             var cache = new Dictionary<TKey, T>();
-            return Observable.Defer(() => { lock (cache) return cache.Values.ToList().ToObservable(); })
+            return Observable
+                .Defer(() => { lock (cache) return cache.Values.ToList().ToObservable(); })
                 .Concat(source.Do(s => { lock (cache) cache[keySelector(s)] = s; }));
         }
 

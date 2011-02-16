@@ -11,7 +11,7 @@ namespace UnitTestingUICode
     {
         public MainWindow()
         {
-            bool useRx = false;
+            bool useRx = true;
             DataContext = this;
             InitializeComponent();
 
@@ -49,14 +49,15 @@ namespace UnitTestingUICode
             {
                 IObservable<string> keypresses =
                         KeyPadGrid.Children.OfType<Button>()
-                        .Select(btn => Observable.FromEvent<RoutedEventHandler, RoutedEventArgs>(
-                                                        h => new RoutedEventHandler(h),
-                                                        h => btn.Click += h,
-                                                        h => btn.Click -= h))
-                                        .Merge()
-                                        .Select(ireh => ireh.Sender)
-                                        .OfType<Button>()
-                                        .Select(btn => btn.Content.ToString());
+                        .Select(btn => 
+                            Observable.FromEvent<RoutedEventHandler, RoutedEventArgs>(
+                                        h => new RoutedEventHandler(h),
+                                        h => btn.Click += h,
+                                        h => btn.Click -= h))
+                                    .Merge()
+                                    .Select(ireh => ireh.Sender)
+                                    .OfType<Button>()
+                                    .Select(btn => btn.Content.ToString());
 
                 DetectCorrectKeypass(keypresses, "1234", TimeSpan.FromSeconds(5))
                     .ObserveOnDispatcher()
@@ -70,16 +71,21 @@ namespace UnitTestingUICode
 
         public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay)
         {
-            return DetectCorrectKeypass(keypresses, password, delay, Scheduler.Dispatcher);
+            return DetectCorrectKeypass(
+                       keypresses, 
+                       password, 
+                       delay, 
+                       Scheduler.Dispatcher);
         }
         public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay, IScheduler scheduler)
         {
-            return keypresses.BufferWithTimeOrCount(delay, password.Length, scheduler)
-                            .Select(listStr => string.Join("", listStr.ToArray()))
-                            .Do(guess => EnteredPassKey = guess)
-                            .Where(guess => guess != "")
-                            .Select(guess => guess == password)
-                            .DistinctUntilChanged();
+            return keypresses
+                .BufferWithTimeOrCount(delay, password.Length, scheduler)
+                .Select(listStr => string.Join("", listStr.ToArray()))
+                .Do(guess => EnteredPassKey = guess)
+                .Where(guess => guess != "")
+                .Select(guess => guess == password)
+                .DistinctUntilChanged();
         }
         #endregion
         

@@ -4,9 +4,8 @@
   <Reference>&lt;ProgramFiles&gt;\Microsoft Cloud Programmability\Reactive Extensions\v1.0.2856.0\Net4\System.Reactive.dll</Reference>
 </Query>
 
-var rnd = new Random();
-var qry = Enumerable.Range(1,5)
-		  .Select(ii=> new {Index=ii, Random = rnd.Next()});
-
-qry.Dump();
-qry.Where(item => item.Index ==1).Dump();
+Observable
+		.Interval(TimeSpan.FromSeconds(0.1))
+		.Take(5)
+		.Do(_ => Thread.Sleep(1500))
+		.Dump();

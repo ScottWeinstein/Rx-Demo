@@ -10,6 +10,7 @@ namespace DisplayUpdates
     {
         protected readonly TwitterService service;
         protected readonly IScheduler sched;
+
         public TwitterFeedBase(Tuple<string, string> authKeys)
         {
             sched = Scheduler.TaskPool;
@@ -40,7 +41,8 @@ namespace DisplayUpdates
                 return TimeSpan.Zero;
 
             TimeSpan timeTillReset = rls.ResetTime - sched.Now;
-            var secondsOfSleepTime = timeTillReset.TotalSeconds / (rls.RemainingHits == 0 ? 1 : rls.RemainingHits);
+            int remainingHits = rls.RemainingHits == 0 ? 1 : rls.RemainingHits;
+            var secondsOfSleepTime = timeTillReset.TotalSeconds / remainingHits;
             return TimeSpan.FromSeconds(secondsOfSleepTime);
         }
 
