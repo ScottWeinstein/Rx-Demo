@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="920">
     <StackPanel>
+        
         <ListBox ItemsSource="{Binding Path=Tweets}" SelectionMode="Single" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

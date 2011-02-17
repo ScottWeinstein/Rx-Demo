@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+
     public class WhereEnumerable<T> : IEnumerable<T>
     {
         private Predicate<T> _p;

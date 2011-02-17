@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Threading;
-using System.Diagnostics;
-using System.Threading;
-
 namespace DisplayUpdates
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Threading;
+    using System.Diagnostics;
+    using System.Threading;
+
     public static class RXX
     {
         public static IObservable<T> ReplayLastByKey<T, TKey>(this IObservable<T> source, Func<T, TKey> keySelector)
@@ -37,6 +37,5 @@ namespace DisplayUpdates
                 }
             });
         }
-
     }
 }

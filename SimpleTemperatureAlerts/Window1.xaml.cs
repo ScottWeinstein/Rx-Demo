@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Collections.ObjectModel;
-
-
-namespace RXDemo
+﻿namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Collections.ObjectModel;
+
     public partial class Window1 : Window
     {
-
         public Window1()
         {
-
-
             //Setup twitter
             //IFluentTwitter twitclient = FluentTwitter.CreateRequest().AuthenticateAs("uid", "pwd");
             //ITwitterStatuses twitStatuses = twitclient.Statuses();
-
 
             //generate temperature alerts
             ObservableUsbTemper temperature = new ObservableUsbTemper();
@@ -30,11 +25,8 @@ namespace RXDemo
             // Send to twitter
             IObservable<string> twitterResponses = tempAlerts.Sample(TimeSpan.FromMinutes(1))
                 .Select(cold => string.Format("It's cold here. Avg temp is {0:0.00}", cold));
-               // .Select(cold => twitStatuses.Update(string.Format("It's cold here. Avg temp is {0:0.00}", cold)).Request().Response)
-                ;
 
             // now wire-up the UI
-
             InitializeComponent();
             this.DataContext = this;
 
@@ -49,7 +41,6 @@ namespace RXDemo
             OCavgTempOverTime.Insert(avgTempOverTime);
             OCtempAlerts.Insert(tempAlerts);
             OCtwitterResponses.Insert(twitterResponses);
-
         }
 
         public ObservableCollection<double> OCFarenheightReadings { get; set; }
@@ -57,7 +48,5 @@ namespace RXDemo
         public ObservableCollection<double> OCavgTempOverTime { get; set; }
         public ObservableCollection<double> OCtempAlerts { get; set; }
         public ObservableCollection<string> OCtwitterResponses { get; set; }
-
-
     }
 }

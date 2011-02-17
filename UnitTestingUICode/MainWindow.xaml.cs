@@ -1,12 +1,12 @@
-﻿using System;
-using System.Concurrency;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
-
-namespace UnitTestingUICode
+﻿namespace UnitTestingUICode
 {
+    using System;
+    using System.Concurrency;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Threading;
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -27,7 +27,7 @@ namespace UnitTestingUICode
 
             for (int ii = 0; ii < 9; ii++)
             {
-            	var btn = new Button() { Content = ii };
+                var btn = new Button() { Content = ii };
                 this.KeyPadGrid.Children.Add(btn);
 
                 #region Traditional
@@ -62,7 +62,6 @@ namespace UnitTestingUICode
                 DetectCorrectKeypass(keypresses, "1234", TimeSpan.FromSeconds(5))
                     .ObserveOnDispatcher()
                     .Subscribe(results => { IsCorrectPassKey = results; });
-
             }
             #endregion
         }
@@ -77,13 +76,14 @@ namespace UnitTestingUICode
                        delay, 
                        Scheduler.Dispatcher);
         }
+
         public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay, IScheduler scheduler)
         {
             return keypresses
                 .BufferWithTimeOrCount(delay, password.Length, scheduler)
-                .Select(listStr => string.Join("", listStr.ToArray()))
+                .Select(listStr => string.Join(string.Empty, listStr.ToArray()))
                 .Do(guess => EnteredPassKey = guess)
-                .Where(guess => guess != "")
+                .Where(guess => guess != string.Empty)
                 .Select(guess => guess == password)
                 .DistinctUntilChanged();
         }
@@ -97,7 +97,7 @@ namespace UnitTestingUICode
             return IsCorrectPassKey;
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e)
         {
             EnteredPassKey = string.Empty;
         }
@@ -112,6 +112,7 @@ namespace UnitTestingUICode
             {
                 return (bool)GetValue(IsCorrectPassKeyProperty);
             }
+
             set
             {
                 SetValue(IsCorrectPassKeyProperty, value);
@@ -128,13 +129,12 @@ namespace UnitTestingUICode
             {
                 return (string)GetValue(EnteredPassKeyProperty);
             }
+
             set
             {
                 SetValue(EnteredPassKeyProperty, value);
             }
         }
         #endregion
-
-
     }
 }

@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Concurrency;
-using System.Linq;
-using System.Net;
-using TweetSharp;
-
 namespace DisplayUpdates
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Concurrency;
+    using System.Linq;
+    using System.Net;
+    using TweetSharp;
+
     public class TwitterFeedAsync : TwitterFeedBase
     {
-        public TwitterFeedAsync(Tuple<string, string> authKeys):base(authKeys)
+        public TwitterFeedAsync(Tuple<string, string> authKeys) : base(authKeys)
         {
             var futureTweets =
             Observable.Create<TwitterStatus>(

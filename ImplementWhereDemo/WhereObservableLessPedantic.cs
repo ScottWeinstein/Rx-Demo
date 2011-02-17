@@ -1,13 +1,13 @@
-using System;
-using System.Linq;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+
     public class WhereObservableLessPedantic<T> : IObservable<T>
     {
-
         private Func<T, bool> _pred;
         private IObservable<T> _stream;
+
         public WhereObservableLessPedantic(IObservable<T> stream, Func<T, bool> pred)
         {
             _pred = pred;

@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+
     public class WhereEnumerator<T> : IEnumerator<T>
     {
         private Predicate<T> _pred;
@@ -12,7 +12,6 @@ namespace RXDemo
         private T _current;
         public WhereEnumerator(IEnumerable<T> source, Predicate<T> pred)
         {
-            
             _pred = pred;
             _srcEnum = source.GetEnumerator();
         }
@@ -40,6 +39,7 @@ namespace RXDemo
                 if (_pred(_current))
                     return true;
             }
+
             return false;
         }
 

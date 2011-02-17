@@ -1,14 +1,14 @@
-using System;
-using System.Concurrency;
-using System.Linq;
-using TweetSharp;
-using System.Collections.Generic;
-
 namespace DisplayUpdates
 {
+    using System;
+    using System.Concurrency;
+    using System.Linq;
+    using TweetSharp;
+    using System.Collections.Generic;
+
     public class TwitterFeedCreateSync : TwitterFeedBase
     {
-        public TwitterFeedCreateSync(Tuple<string, string> authKeys):base(authKeys)
+        public TwitterFeedCreateSync(Tuple<string, string> authKeys) : base(authKeys)
         {
              IEnumerable<TwitterStatus> tweets = 
                  service.ListTweetsOnHomeTimeline();
@@ -36,7 +36,6 @@ namespace DisplayUpdates
                      {
                          self(GetSleepTime(service, sched));
                      }
-
                  };
                  sched.Schedule(RecSelf, GetSleepTime(service, sched));
 

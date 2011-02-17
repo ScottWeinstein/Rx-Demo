@@ -1,6 +1,4 @@
 *.suo
 *.csproj.user
+StyleCop.Cache/DisplayUpdates/authkeys.txt/Tests/
 *obj/
-/bin/
-/DisplayUpdates/authkeys.txt
-/Tests/

@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Disposables;
-//using Dimebrain.TweetSharp.Fluent;
-using System.Concurrency;
-using System.Windows.Media;
-
 namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Disposables;
+    using System.Concurrency;
+    using System.Windows.Media;
+
     public class ObservableUsbTemper : IDisposable
     {
         private IDisposable _disp;
@@ -19,7 +18,6 @@ namespace RXDemo
                                             .ToArray();
             _disp = new CompositeDisposable(devices);
             var thermometer = devices.First();
-
 
             var txs = Observable.Generate(thermometer.GetTemperature(), _ => true, t => t, t => thermometer.GetTemperature(), Scheduler.ThreadPool)
                 .Replay(1);

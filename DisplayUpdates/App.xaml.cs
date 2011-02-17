@@ -1,13 +1,13 @@
-﻿using System;
-using System.Windows;
-using Autofac;
-using TweetSharp;
-using System.Linq;
-using DisplayUpdates.Properties;
-using System.IO;
-
-namespace DisplayUpdates
+﻿namespace DisplayUpdates
 {
+    using System;
+    using System.Windows;
+    using Autofac;
+    using TweetSharp;
+    using System.Linq;
+    using DisplayUpdates.Properties;
+    using System.IO;
+
     public partial class App : Application
     {
         public static IContainer Container { get; private set; }
@@ -23,7 +23,7 @@ namespace DisplayUpdates
             builder.Register<Tuple<string, string>>(ctx => GetAuthKeys()).SingleInstance();
 
             //Observable.Never<TwitterStatus>()
-            builder.Register<ITwitterFeed>(ctx => OnStartupExtracted(ctx,useTwitter)).SingleInstance();
+            builder.Register<ITwitterFeed>(ctx => OnStartupExtracted(ctx, useTwitter)).SingleInstance();
             builder.Register<IObservable<TwitterStatus>>(ctx => ctx.Resolve<ITwitterFeed>().Tweets);
 
             Container = builder.Build();
@@ -44,6 +44,5 @@ namespace DisplayUpdates
             
             return new Tuple<string, string>(lines.First(), lines.Last());
         }
-
     }
 }

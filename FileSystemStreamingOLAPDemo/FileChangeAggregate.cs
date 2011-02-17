@@ -1,7 +1,7 @@
-using System;
-
 namespace RXDemo
 {
+    using System;
+
     public class FileChangeAggregate
     {
         public double Sum { get; set; }

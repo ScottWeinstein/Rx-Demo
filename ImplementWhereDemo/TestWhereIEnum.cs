@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-
 namespace RXDemo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
+
     public class TestWhereIEnum
     {
         private IEnumerable<int> wholeNums;
@@ -16,7 +16,6 @@ namespace RXDemo
             repeats = Enumerable.Repeat(rnd.Next(int.MaxValue - 100), 10);
             wholeNums = Enumerable.Range(0, 100);
             Enumerable.Empty<int>();
-
         }
 
         [Fact]
@@ -50,8 +49,5 @@ namespace RXDemo
             var actual = RXDemo.CustomWhereCombinator.CustomWhereNoYield(repeats, x => x == repeats.First());
             Assert.Equal(expected.ToArray(), actual.ToArray());
         }
-
-
-
     }
 }

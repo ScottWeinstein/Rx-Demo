@@ -1,11 +1,11 @@
-using System;
-using System.Concurrency;
-using TweetSharp;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace DisplayUpdates
 {
+    using System;
+    using System.Concurrency;
+    using TweetSharp;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public abstract class TwitterFeedBase : ITwitterFeed
     {
         protected readonly TwitterService service;

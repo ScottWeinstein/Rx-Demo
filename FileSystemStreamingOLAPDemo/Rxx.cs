@@ -1,16 +1,17 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 namespace RXDemo
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
     public static class Rxx
     {
         public static IObservable<StatInfoItem> ToCommonAggregates<TSrc>(this IObservable<TSrc> source, Func<TSrc, double> dataSelector)
         {
-            return ToCommonAggregates(source,dataSelector, _=> new Unit());
+            return ToCommonAggregates(source, dataSelector, _ => new Unit());
         }
+
         public static IObservable<StatInfoItem<T>> ToCommonAggregates<T, TSrc>(this IObservable<TSrc> source, Func<TSrc, double> dataSelector, Func<TSrc, T> itemSelector)
         {
             return source.Scan(new StatInfoItem<T>(), (cur, next) =>
@@ -36,6 +37,5 @@ namespace RXDemo
             })
             .Skip(1); // need a seed, but don't want to include seed value in the output
         }
-
     }
 }

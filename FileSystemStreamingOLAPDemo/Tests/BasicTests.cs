@@ -1,15 +1,13 @@
-using System;
-using System.Linq;
-using System.Threading;
-using Xunit;
-using Xunit.Extensions;
-using System.Concurrency;
-
-
 namespace RXDemo.Tests
 {
-    public class BasicTests
+    using System;
+    using System.Linq;
+    using System.Threading;
+    using Xunit;
+    using Xunit.Extensions;
+    using System.Concurrency;
 
+    public class BasicTests
     {
       [Theory, ExcelData(@"Tests\TestData.xls", "select * from StdDevData")]
         public void TestStdDev1(double expected, double d1, double d2, double d3, double d4)
@@ -30,7 +28,7 @@ namespace RXDemo.Tests
                     Extension = ".none",
                     IsContainer = false,
                     Length = 1,
-                    Path = @""
+                    Path = string.Empty
             }).Repeat(2)
             .ToCommonAggregates(fcf => fcf.Length, fcf => fcf.Extension)
             .ToEnumerable();
@@ -53,6 +51,5 @@ namespace RXDemo.Tests
             
             disp.Dispose();
         }
-
     }
 }

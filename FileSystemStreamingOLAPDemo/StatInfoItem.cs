@@ -4,11 +4,11 @@ namespace RXDemo
     {
         public long Count { get; set; }
         public double Mean { get; set; }
-        protected internal double M2;
         public double StdDev { get; set; }
         public double Sum { get; set; }
         public double Min { get; set; }
         public double Max { get; set; }
+        protected internal double M2;
     }
 
     public class StatInfoItem<T> : StatInfoItem
@@ -17,6 +17,7 @@ namespace RXDemo
         {
             Item = default(T);
         }
+
         public T Item { get; set; }
     }
 }
