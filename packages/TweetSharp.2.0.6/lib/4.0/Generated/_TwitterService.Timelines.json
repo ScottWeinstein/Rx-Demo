@@ -1,0 +1,89 @@
+﻿IEnumerable<TwitterStatus>, "statuses/public_timeline", ListTweetsOnPublicTimeline
+
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimeline
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimeline, int count
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimeline, int page, int count
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineSince, long sinceId
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimelineBefore, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimeline
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimeline, int count
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimeline, int page, int count
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineSince, long sinceId
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/friends_timeline", ListTweetsOnFriendsTimelineBefore, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimeline
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimeline, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimeline, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineSince, long sinceId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimelineBefore, long maxId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, int userId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, int userId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, int userId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, int userId, long sinceId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, int userId, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, int userId, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, int userId, long maxId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, int userId, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, int userId, long maxId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, string screenName
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, string screenName, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimeline, string screenName, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, string screenName, long sinceId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, string screenName, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineSince, string screenName, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, string screenName, long maxId
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, string screenName, long maxId, int page
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnSpecifiedUserTimelineBefore, string screenName, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMe
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMe, int count
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMe, int page, int count
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeSince, long sinceId
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/mentions", ListTweetsMentioningMeBefore, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMe 
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMe, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMe, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMe, long sinceId
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMeSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMeSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMeBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMeBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_by_me", ListRetweetsByMeBefore, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMe 
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMe, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMe, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeSince, long sinceId
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeBefore, long maxId
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/retweeted_to_me", ListRetweetsToMeBefore, long maxId, int page, int count
+
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweets
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweets, int count
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweets, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweets, long sinceId
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweetsSince, long sinceId, int count
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweetsSince, long sinceId, int page, int count
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweetsSince, long maxId
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweetsBefore, long maxId, int count
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweetsBefore, long maxId, int page, int count

@@ -1,10 +1,10 @@
 namespace DisplayUpdates
 {
     using System;
-    using System.Concurrency;
-    using System.Linq;
-    using TweetSharp;
     using System.Collections.Generic;
+    using System.Reactive.Concurrency;
+    using System.Reactive.Linq;
+    using TweetSharp;
 
     public class TwitterFeedCreateSync : TwitterFeedBase
     {
@@ -37,7 +37,7 @@ namespace DisplayUpdates
                          self(GetSleepTime(service, sched));
                      }
                  };
-                 sched.Schedule(RecSelf, GetSleepTime(service, sched));
+                 sched.Schedule(GetSleepTime(service, sched), RecSelf);
 
                  return () => { isRunning = false; };
              });

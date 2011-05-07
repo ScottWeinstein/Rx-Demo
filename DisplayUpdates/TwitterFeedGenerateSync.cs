@@ -2,7 +2,7 @@ namespace DisplayUpdates
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Reactive.Linq;
     using TweetSharp;
 
     public class TwitterFeedGenerateSync : TwitterFeedBase
@@ -15,20 +15,22 @@ namespace DisplayUpdates
 
             var state = Tuple.Create(service, GetMaxId(tweets, 0), tweets);
 
+            Func<Tuple<TwitterService, long, IEnumerable<TwitterStatus>>,TimeSpan> newVariable = (st) => GetSleepTime(st.Item1, sched);
+
             IObservable<TwitterStatus> futureTweets =
-                Observable.GenerateWithTime(
+                Observable.Generate(
                  state,         //initialState
                  _ => true,     //condition
                  st =>          //iterate
-                 {            
+                 {
                      var sinceId = st.Item2;
-                     var newtweets = 
+                     var newtweets =
                          service.ListTweetsOnHomeTimelineSince(sinceId);
                      sinceId = GetMaxId(newtweets, sinceId);
                      return Tuple.Create(service, sinceId, newtweets);
                  },
                 st => st.Item3.ToObservable(),          //resultSelector
-                st => GetSleepTime(st.Item1, sched),    //timeSelector
+                newVariable,    //timeSelector
                 sched)                                  //scheduler
                 .SelectMany(a => a); // need to flatten IO<IO<T> to just IO<T>
 

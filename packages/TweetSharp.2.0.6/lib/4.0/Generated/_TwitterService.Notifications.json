@@ -1,0 +1,5 @@
+﻿TwitterUser, "users/notifications/follow":POST, FollowUserNotifications, string screenName
+TwitterUser, "users/notifications/follow":POST, FollowUserNotifications, int userId
+
+TwitterUser, "users/notifications/leave":POST, UnfollowUserNotifications, int userId
+TwitterUser, "users/notifications/leave":POST, UnfollowUserNotifications, string userScreenName

@@ -4,9 +4,10 @@ namespace RXDemo
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using System.Disposables;
-    using System.Concurrency;
     using System.Windows.Media;
+    using System.Reactive.Disposables;
+    using System.Reactive.Linq;
+    using System.Reactive.Concurrency;
 
     public class ObservableUsbTemper : IDisposable
     {

@@ -2,11 +2,12 @@ namespace RXDemo.Tests
 {
     using System;
     using System.Linq;
+    using System.Reactive.Concurrency;
+    using System.Reactive.Linq;
     using System.Threading;
     using Xunit;
     using Xunit.Extensions;
-    using System.Concurrency;
-
+    
     public class BasicTests
     {
       [Theory, ExcelData(@"Tests\TestData.xls", "select * from StdDevData")]

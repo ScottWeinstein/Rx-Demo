@@ -1,12 +1,12 @@
 ﻿namespace DisplayUpdates
 {
     using System;
+    using System.IO;
+    using System.Linq;
     using System.Windows;
     using Autofac;
-    using TweetSharp;
-    using System.Linq;
     using DisplayUpdates.Properties;
-    using System.IO;
+    using TweetSharp;
 
     public partial class App : Application
     {

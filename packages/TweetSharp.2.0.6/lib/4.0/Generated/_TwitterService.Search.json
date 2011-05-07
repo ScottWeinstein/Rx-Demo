@@ -1,0 +1,13 @@
+﻿TwitterSearchResult, "search", Search, string q
+TwitterSearchResult, "search", Search, string q, TwitterSearchResultType resultType
+TwitterSearchResult, "search", Search, string q, int rpp
+TwitterSearchResult, "search", Search, string q, int rpp, TwitterSearchResultType resultType
+TwitterSearchResult, "search", Search, string q, int page, int rpp
+TwitterSearchResult, "search", Search, string q, int page, int rpp, TwitterSearchResultType resultType
+
+TwitterSearchResult, "search", SearchSince, long since_id, string q
+TwitterSearchResult, "search", SearchSince, long since_id, string q, TwitterSearchResultType resultType
+TwitterSearchResult, "search", SearchSince, long since_id, string q, int rpp
+TwitterSearchResult, "search", SearchSince, long since_id, string q, int rpp, TwitterSearchResultType resultType
+TwitterSearchResult, "search", SearchSince, long since_id, string q, int page, int rpp
+TwitterSearchResult, "search", SearchSince, long since_id, string q, int page, int rpp, TwitterSearchResultType resultType
