@@ -1,9 +1,0 @@
-﻿TwitterUser, "blocks/create":POST, BlockUser, int userId
-TwitterUser, "blocks/create":POST, BlockUser, string userScreenName
-TwitterUser, "blocks/destroy":DELETE, UnblockUser, int userId
-TwitterUser, "blocks/destroy":DELETE, UnblockUser, string userScreenName
-TwitterUser, "blocks/exists", VerifyBlocking, int userId
-TwitterUser, "blocks/exists", VerifyBlocking, string userScreenName
-IEnumerable<TwitterUser>, "blocks/blocking", ListBlockedUsers 
-IEnumerable<TwitterUser>, "blocks/blocking", ListBlockedUsers, int page
-IEnumerable<int>, "blocks/blocking/ids", ListBlockedUserIds
