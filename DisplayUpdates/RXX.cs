@@ -7,6 +7,7 @@ namespace DisplayUpdates
     using System.Windows.Threading;
     using System.Diagnostics;
     using System.Threading;
+    using System.Reactive.Linq;
 
     public static class RXX
     {
@@ -22,7 +23,7 @@ namespace DisplayUpdates
         {
             col.Clear();
             Dictionary<TKey, int> lookupTable = new Dictionary<TKey, int>();
-            return stream.ObserveOnDispatcher().Subscribe(item =>
+            return stream.ObserveOn(Dispatcher.CurrentDispatcher).Subscribe(item =>
             {
                 var key = keySelector(item);
                 int index;

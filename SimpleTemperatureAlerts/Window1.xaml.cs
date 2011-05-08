@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Windows;
     using System.Collections.ObjectModel;
+    using System.Reactive.Linq;
 
     public partial class Window1 : Window
     {
@@ -18,7 +19,7 @@
             ObservableUsbTemper temperature = new ObservableUsbTemper();
 
             IObservable<double> ts = temperature.TemperatureStreamFarenheight;
-            IObservable<IList<double>> tsSlidingWindow = ts.BufferWithTime(TimeSpan.FromSeconds(5));
+            IObservable<IList<double>> tsSlidingWindow = ts.Buffer(TimeSpan.FromSeconds(5));
             IObservable<double> avgTempOverTime = tsSlidingWindow.Select(buff => buff.Average());
             IObservable<double> tempAlerts = avgTempOverTime.Where(avgtemp => avgtemp < 80);
 

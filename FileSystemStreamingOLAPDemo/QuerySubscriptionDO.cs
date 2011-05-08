@@ -4,6 +4,7 @@ namespace RXDemo
     using System.Linq;
     using System.Windows;
     using System.Collections.ObjectModel;
+    using System.Reactive.Linq;
 
     public class QuerySubscriptionDO : DependencyObject, IDisposable
     {

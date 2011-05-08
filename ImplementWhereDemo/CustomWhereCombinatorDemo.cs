@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Diagnostics;
+    using System.Reactive.Linq;
 
     public class CustomWhereCombinatorDemo
     {

@@ -1,10 +1,10 @@
 namespace DisplayUpdates
 {
     using System;
-    using System.Concurrency;
     using TweetSharp;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive.Concurrency;
 
     public abstract class TwitterFeedBase : ITwitterFeed
     {

@@ -4,12 +4,14 @@ namespace RXDemo
     using System.Linq;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
     public static class Rxx
     {
         public static IObservable<StatInfoItem> ToCommonAggregates<TSrc>(this IObservable<TSrc> source, Func<TSrc, double> dataSelector)
         {
-            return ToCommonAggregates(source, dataSelector, _ => new Unit());
+            return ToCommonAggregates(source, dataSelector, _ => Unit.Default);
         }
 
         public static IObservable<StatInfoItem<T>> ToCommonAggregates<T, TSrc>(this IObservable<TSrc> source, Func<TSrc, double> dataSelector, Func<TSrc, T> itemSelector)

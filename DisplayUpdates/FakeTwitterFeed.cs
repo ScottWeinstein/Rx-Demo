@@ -1,8 +1,8 @@
 namespace DisplayUpdates
 {
     using System;
+    using System.Reactive.Linq;
     using TweetSharp;
-    using System.Linq;
 
     public class FakeTwitterFeed : ITwitterFeed
     {
@@ -13,7 +13,7 @@ namespace DisplayUpdates
             _ScreenNames = new[] { "@A", "@B", "@C", "@D", "@E", "@F", "@G", "@H" };
             Random rnd = new Random();
 
-            Tweets = Observable.GenerateWithTime<int, TwitterStatus>(
+            Tweets = Observable.Generate<int, TwitterStatus>(
                          initialState: rnd.Next(),
                          condition: _ => true,
                          iterate: _ => rnd.Next(),

@@ -6,6 +6,9 @@ namespace RXDemo
     using System.Windows;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Reactive.Subjects;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
     public class FSViewModel : DependencyObject
     {
@@ -14,7 +17,7 @@ namespace RXDemo
 
         private IConnectableObservable<FileChangeFact> _storeSubject;
 
-        public FSViewModel(IObservable<IEvent<RoutedEventArgs>> uiAddQuery)
+        public FSViewModel(IObservable<EventPattern<RoutedEventArgs>> uiAddQuery)
         {
             _storeSubject = GetFileSystemStream().Replay();
 
@@ -67,12 +70,12 @@ namespace RXDemo
                                 };
             
             //notice the SelectMany()
-            IEnumerable<IObservable<IEvent<FileSystemEventArgs>>> seqfsEventsAsObservables = 
+            IEnumerable<IObservable<EventPattern<FileSystemEventArgs>>> seqfsEventsAsObservables = 
                         from FSWatcher in seqFSWatchers
                         from eventType in new string[] { "Changed", "Deleted", "Created" }
-                        select Observable.FromEvent<FileSystemEventArgs>(FSWatcher, eventType);
+                        select Observable.FromEventPattern<FileSystemEventArgs>(FSWatcher, eventType);
 
-            IObservable<IEvent<FileSystemEventArgs>> fsEventsMerged = Observable.Merge(seqfsEventsAsObservables);
+            IObservable<EventPattern<FileSystemEventArgs>> fsEventsMerged = Observable.Merge(seqfsEventsAsObservables);
 
             IObservable<FileChangeFact> fsChanges = fsEventsMerged
                             .Select(fsea =>

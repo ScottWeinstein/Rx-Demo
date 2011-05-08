@@ -1,9 +1,7 @@
 namespace UnitTestingUICode
 {
     using System;
-    using System.Collections.Generic;
-    using System.Concurrency;
-    using System.Reactive.Testing;
+    using Microsoft.Reactive.Testing;
     using Xunit;
 
     public class Tests : RxTestBase
@@ -35,11 +33,10 @@ namespace UnitTestingUICode
                     _scheduler);
 
             // Act
-            IEnumerable<Recorded<Notification<bool>>> actuals = 
-                _scheduler.Run(target);
+            ITestableObserver<bool> actuals = _scheduler.Start(target);
             
             // Assert
-            actuals.AssertEqual(OnNext(240, true));
+            ReactiveAssert.AreElementsEqual(new[] { OnNext(240, true) }, actuals.Messages);
         }
 
         [Fact]
@@ -58,11 +55,10 @@ namespace UnitTestingUICode
                                                        _scheduler);
             
             // Act
-            IEnumerable<Recorded<Notification<bool>>> actuals = 
-                _scheduler.Run(target);
+            var actuals = _scheduler.Start(target);
             
             // Assert
-            actuals.AssertEqual(OnNext(240, false));
+            ReactiveAssert.AreElementsEqual(new [] { OnNext(240, false) }, actuals.Messages);
         }
 
         [Fact]
@@ -81,11 +77,10 @@ namespace UnitTestingUICode
                                                        _scheduler);
             
             // Act
-            IEnumerable<Recorded<Notification<bool>>> actuals = 
-                _scheduler.Run(target);
+            var actuals = _scheduler.Start(target);
             
             // Assert
-            actuals.AssertEqual(OnNext(251, false));
+            ReactiveAssert.AreElementsEqual(new [] { OnNext(250, false) }, actuals.Messages);
         }
     }
 }

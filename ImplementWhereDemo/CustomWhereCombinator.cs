@@ -3,6 +3,7 @@ namespace RXDemo
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using System.Reactive.Linq;
 
     public static class CustomWhereCombinator
     {
@@ -18,7 +19,7 @@ namespace RXDemo
 
         public static IObservable<T> CustomWhere<T>(this IObservable<T> stream, Func<T, bool> pred)
         {
-            return Observable.CreateWithDisposable<T>(downStreamObs => stream.Subscribe(
+            return Observable.Create<T>(downStreamObs => stream.Subscribe(
                                     val =>
                                     {
                                         if (pred(val))

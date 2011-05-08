@@ -4,6 +4,7 @@ namespace RXDemo
     using System.Linq;
     using System.Net;
     using System.IO;
+    using System.Reactive.Linq;
 
     public static class RxxAsync
     {

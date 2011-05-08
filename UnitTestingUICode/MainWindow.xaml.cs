@@ -1,11 +1,13 @@
 ﻿namespace UnitTestingUICode
 {
     using System;
-    using System.Concurrency;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Threading;
+    using System.Windows.Input;
+    using System.Reactive.Concurrency;
+    using System.Reactive.Linq;
 
     public partial class MainWindow : Window
     {
@@ -49,11 +51,11 @@
             {
                 IObservable<string> keypresses =
                         KeyPadGrid.Children.OfType<Button>()
-                        .Select(btn => 
-                            Observable.FromEvent<RoutedEventHandler, RoutedEventArgs>(
-                                        h => new RoutedEventHandler(h),
-                                        h => btn.Click += h,
-                                        h => btn.Click -= h))
+                        .Select(btn =>
+                            Observable.FromEventPattern<MouseButtonEventHandler, RoutedEventArgs>(
+                                        h => new MouseButtonEventHandler(h),
+                                        h => btn.MouseLeftButtonDown += h,
+                                        h => btn.MouseLeftButtonDown -= h))
                                     .Merge()
                                     .Select(ireh => ireh.Sender)
                                     .OfType<Button>()
@@ -74,13 +76,13 @@
                        keypresses, 
                        password, 
                        delay, 
-                       Scheduler.Dispatcher);
+                       System.Reactive.Concurrency.DispatcherScheduler.Instance);
         }
 
         public IObservable<bool> DetectCorrectKeypass(IObservable<string> keypresses, string password, TimeSpan delay, IScheduler scheduler)
         {
             return keypresses
-                .BufferWithTimeOrCount(delay, password.Length, scheduler)
+                .Buffer(delay, password.Length, scheduler)
                 .Select(listStr => string.Join(string.Empty, listStr.ToArray()))
                 .Do(guess => EnteredPassKey = guess)
                 .Where(guess => guess != string.Empty)
