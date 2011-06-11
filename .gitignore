@@ -5,3 +5,4 @@ StyleCop.Cache
 DisplayUpdates/authkeys.txt
 Tests/
 bin/
+packages

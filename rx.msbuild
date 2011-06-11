@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == '' ">Debug</Configuration>
   </PropertyGroup>
-  <UsingTask  AssemblyFile="packages\xunit.1.7.0.1540\lib\xunit.runner.msbuild.dll"  TaskName="Xunit.Runner.MSBuild.xunit" />
+  <UsingTask  AssemblyFile="libs\xUnit\xunit.runner.msbuild.dll"  TaskName="Xunit.Runner.MSBuild.xunit" />
 
   <Target Name="Build" DependsOnTargets="NuGet">
     <MSBuild Projects="Rx-Demos.sln" Properties="Configuration=$(Configuration)" />
@@ -18,16 +18,13 @@
         <Exec Command='libs\NuGet.exe install "%(NuGetPackage.FullPath)" -o Packages'  />
     </Target>
 
-
-
-        <Target Name="Test" >
+  <Target Name="Test" >
     <ItemGroup>
       <TestAssemblies Include="bin\$(Configuration)\DisplayUpdates.exe"/>
       <TestAssemblies Include="bin\$(Configuration)\RxDemo.FileSystemStreamingOlap.exe"  />
 	  <TestAssemblies Include="bin\$(Configuration)\RxDemo.ImplementWhere.exe"  />
 	  <TestAssemblies Include="bin\$(Configuration)\RxDemo.ImplementWhere.exe" />
 	  <TestAssemblies Include="bin\$(Configuration)\RxDemo.TempAlerts.exe" />
-	  <TestAssemblies Include="bin\$(Configuration)\RxDemo.UnitTestingAsyncWCF.exe" />
 	  <TestAssemblies Include="bin\$(Configuration)\UnitTestingUICode.exe" />
 	  <TestAssemblies Include="bin\$(Configuration)\RxDemo.Common.dll" />
     </ItemGroup>

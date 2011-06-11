@@ -59,12 +59,12 @@
     <Reference Include="System.Linq.Async">
       <HintPath>..\packages\Rx-AsyncLinq.1.0.2856.0\lib\Net4\System.Linq.Async.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive, Version=1.1.10425.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Reactive, Version=1.0.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Main.1.1.10425\lib\Net4\System.Reactive.dll</HintPath>
+      <HintPath>..\packages\Rx-Main.1.0.10605\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading">
-      <HintPath>..\packages\Rx-WPF.1.1.10425\lib\Net4\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>..\packages\Rx-WPF.1.0.10605\lib\Net4\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -131,11 +131,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+    <Target Name="BeforeBuild">
+        <Error Condition="!Exists('..\Packages\')" Text="You must run &gt; msbuild rx.msbuild to download required NuGet Packages" />
+    </Target>
 </Project>
