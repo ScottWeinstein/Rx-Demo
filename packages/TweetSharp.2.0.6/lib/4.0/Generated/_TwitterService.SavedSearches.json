@@ -1,4 +1,0 @@
-﻿IEnumerable<TwitterSavedSearch>, "saved_searches", ListSavedSearches
-TwitterSavedSearch, "saved_searches/show", GetSavedSearch, long id
-TwitterSavedSearch, "saved_searches/create":POST, CreateSavedSearch, string query
-TwitterSavedSearch, "saved_searches/destroy/{id}":DELETE, DeleteSavedSearch, long id
