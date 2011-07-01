@@ -37,18 +37,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Reactive.Testing">
-      <HintPath>..\packages\Rx-Testing.1.0.10605\lib\Net4-Full\Microsoft.Reactive.Testing.dll</HintPath>
+    <Reference Include="Microsoft.Reactive.Testing, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Testing.1.0.10621\lib\Net4-Full\Microsoft.Reactive.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Reactive, Version=1.0.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Main.1.0.10605\lib\Net4\System.Reactive.dll</HintPath>
+      <HintPath>..\packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Windows.Threading, Version=1.0.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-WPF.1.0.10605\lib\Net4\System.Reactive.Windows.Threading.dll</HintPath>
+    <Reference Include="System.Reactive.Windows.Threading, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-WPF.1.0.10621\lib\Net4\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,7 +99,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Target Name="BeforeBuild">
-        <Error Condition="!Exists('..\Packages\')" Text="You must run &gt; msbuild rx.msbuild to download required NuGet Packages" />
-    </Target>
+  <Target Name="BeforeBuild">
+    <Error Condition="!Exists('..\Packages\')" Text="You must run &gt; msbuild rx.msbuild to download required NuGet Packages" />
+  </Target>
 </Project>
