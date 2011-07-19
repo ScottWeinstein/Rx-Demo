@@ -50,12 +50,12 @@ Agenda
 What's the Rx thing about, why should I care?
 =======================================================================
 * For some, Rx is something of a revelation.
-* A **good** way to deal with asyncronous code
+* A **good** way to deal with asynchronous code
 * A **good** way to deal with event based code
 * A **good** way to deal with concurrent code
 * A **good** way to deal with time sensitive code
 
-Telling you how it is
+Reactive matters
 =======================================================================
 * Systems and architectures that are not _reactive_ are **legacy** systems
     * Real life is async
@@ -70,6 +70,10 @@ A **good** way?
 * Composable
 * Testable
 * Pure (side-effect free)
+
+###Two use cases
+1. Managing a bar
+1. Calling a web service async
 
 So what is Rx?
 =======================================================================
