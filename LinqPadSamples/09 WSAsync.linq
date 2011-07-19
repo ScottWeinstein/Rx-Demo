@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <Reference>&lt;ProgramFilesX86&gt;\Microsoft Reactive Extensions SDK\v1.0.10425\Binaries\.NETFramework\v4.0\System.Reactive.dll</Reference>
+  <Reference Relative="..\Packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll">&lt;Personal&gt;\d\github\Rx-Demo\Packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll</Reference>
   <Namespace>System.Reactive.Concurrency</Namespace>
   <Namespace>System.Reactive.Linq</Namespace>
   <Namespace>System.Reactive</Namespace>
@@ -27,4 +27,3 @@ void Main()
 
 	
 }
-
