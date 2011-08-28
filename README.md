@@ -79,7 +79,7 @@ So what is Rx?
 =======================================================================
 * A new Interface pair `IObservable<T>` and `IObserver<T>` for .Net BCL
     * The **dual** of `IEnumerable<T>` and `IEnumerator<T>`
-* A core implementation and a set of Linq combinators for doing usefull things
+* A core implementation and a set of Linq combinators for doing useful  things
 
 A look at some recent Rx questions
 =======================================================================
