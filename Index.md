@@ -152,12 +152,11 @@ How to build
 =======================================================================
 ##Demos
 
-You **must** first compile via command line msbuild.
-
-    > msbuild .\rx.msbuild
+    > msbuild # compile
+    > msbuild .\rx.msbuild # for unit tests
 
 To run the twitter example, you'll need to create the authkeys.txt file and add your own twitter API authkey
 
 ## Slide deck
     slideshow -f http://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
-    slideshow -t s6syntax.txt .\README.md -o Slideshow
+    slideshow -t s6syntax.txt index.md 
