@@ -24,7 +24,7 @@ Code to accompany [Intro to Reactive extentions](http://scottweinstein.github.co
 
 1. Accept correct password
 1. Reject incorrect
-1. No “submit button”
+1. No "submit button"
 1. Timeout
 1. Must be unit testable
 
@@ -89,7 +89,7 @@ Open questions?
 
 More Details - IEnumerable and IEnumerator
 =======================================================================
-```
+```CSharp
 interface IEnumerable<T>
 {	
     IEnumerator<T> GetEnumerator();
