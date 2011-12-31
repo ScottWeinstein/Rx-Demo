@@ -1,8 +1,4 @@
-author: @ScottWeinstein
-title: Reactive Extension 1.0
-footer: @ScottWeinstein
-subfooter: Lab49
-presdate: 7/16/2011
+Code to accompany [Intro to Reactive extentions](http://scottweinstein.github.com/Rx-Demo/) talk
 
 #LinqPad Demos
 
@@ -93,35 +89,35 @@ Open questions?
 
 More Details - IEnumerable and IEnumerator
 =======================================================================
-<% code :lang => 'csharp', :line_numbers => 'off' do %> 
-interface IEnumerable<T>
-{	
-    IEnumerator<T> GetEnumerator();
+```
+interface IEnumerable<T>
+{	
+    IEnumerator<T> GetEnumerator();
 }
 
-interface IEnumerator<T>: IDisposable 
-{	
-    T Current { get; } 	
-    bool MoveNext();
+interface IEnumerator<T>: IDisposable 
+{	
+    T Current { get; } 	
+    bool MoveNext();
 }
-<% end %> 
+```
 
 
 More Details - IObservable and IObserver
 =======================================================================
-<% code :lang => 'csharp', :line_numbers => 'off' do %> 
-interface IObservable<T>
-{	
-    IDisposable Subscribe(IObserver<T> observer);
+```
+interface IObservable<T>
+{	
+    IDisposable Subscribe(IObserver<T> observer);
 }
 
-interface IObserver<T>
-{	
-    void OnCompleted();	
-    void OnError(Exception error);	
-    void OnNext(T value);
+interface IObserver<T>
+{	
+    void OnCompleted();	
+    void OnError(Exception error);	
+    void OnNext(T value);
 }
-<% end %> 
+```
 
 Pop Quiz - Hot or Not?
 =======================================================================
@@ -146,18 +142,3 @@ Traps
 
 * Avoid implementing IObservable from scratch
 * Hot or not?
-
-
-How to build
-=======================================================================
-##Demos
-
-You **must** first compile via command line msbuild.
-
-    > msbuild .\rx.msbuild
-
-To run the twitter example, you'll need to create the authkeys.txt file and add your own twitter API authkey
-
-## Slide deck
-    slideshow -f http://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
-    slideshow -t s6syntax.txt .\README.md -o Slideshow
