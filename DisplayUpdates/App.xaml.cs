@@ -22,14 +22,14 @@
             builder.RegisterAssemblyTypes(GetType().Assembly);
             builder.Register<Tuple<string, string>>(ctx => GetAuthKeys()).SingleInstance();
 
-            //Observable.Never<TwitterStatus>()
-            builder.Register<ITwitterFeed>(ctx => OnStartupExtracted(ctx, useTwitter)).SingleInstance();
+            // Observable.Never<TwitterStatus>()
+            builder.Register<ITwitterFeed>(ctx => GetITwitterFeed(ctx, useTwitter)).SingleInstance();
             builder.Register<IObservable<TwitterStatus>>(ctx => ctx.Resolve<ITwitterFeed>().Tweets);
 
             Container = builder.Build();
         }
 
-        private static ITwitterFeed OnStartupExtracted(IComponentContext ctx, bool useTwitter)
+        private static ITwitterFeed GetITwitterFeed(IComponentContext ctx, bool useTwitter)
         {
             if (useTwitter)
                 return ctx.Resolve<TwitterFeedAsync>();
