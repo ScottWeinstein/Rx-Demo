@@ -6,17 +6,10 @@
   </PropertyGroup>
   <UsingTask  AssemblyFile="libs\xUnit\xunit.runner.msbuild.dll"  TaskName="Xunit.Runner.MSBuild.xunit" />
 
-  <Target Name="Build" DependsOnTargets="NuGet">
+  <Target Name="Build">
     <MSBuild Projects="Rx-Demos.sln" Properties="Configuration=$(Configuration)" />
     <CallTarget Targets="Test" />
   </Target>
-
-    <Target Name="NuGet">
-        <ItemGroup>
-            <NuGetPackage Include="*\packages.config" />
-        </ItemGroup>
-        <Exec Command='libs\NuGet.exe install "%(NuGetPackage.FullPath)" -o Packages'  />
-    </Target>
 
   <Target Name="Test" >
     <ItemGroup>
